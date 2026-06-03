@@ -1,0 +1,7 @@
+name = "vicino"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-06-03"
+
+# Cloudflare Pages deployment is static-first.
+# Dynamic functionality, if needed later, should use Pages Functions,
+# Workers, or a separate Bun service depending on the requirement.

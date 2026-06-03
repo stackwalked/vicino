@@ -1,0 +1,25 @@
+{
+  "name": "@vicino/www",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun -b astro dev",
+    "build": "bun -b astro build",
+    "preview": "bun -b astro preview",
+    "check": "bun -b astro check",
+    "deploy": "bun -b wrangler pages deploy dist --project-name vicino",
+    "cf:preview": "bun -b wrangler pages dev dist"
+  },
+  "dependencies": {
+    "@vicino/site-kit": "workspace:*"
+  },
+  "devDependencies": {
+    "@astrojs/check": "latest",
+    "@tailwindcss/vite": "latest",
+    "astro": "latest",
+    "tailwindcss": "latest",
+    "typescript": "latest",
+    "wrangler": "latest"
+  }
+}

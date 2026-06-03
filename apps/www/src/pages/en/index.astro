@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HomePage from '../../components/marketing/HomePage.astro';
+import { useTranslations } from '../../i18n';
+import { getSeo } from '../../utils/seo';
+
+const locale = 'en';
+const t = useTranslations(locale);
+const seo = getSeo({ locale, title: t.seo.title, description: t.seo.description });
+---
+
+<BaseLayout locale={locale} {...seo}>
+  <HomePage locale={locale} />
+</BaseLayout>

@@ -1,0 +1,91 @@
+---
+import Container from "../ui/Container.astro";
+import { localeLabels, locales, type Locale } from "../../i18n/config";
+import { useTranslations } from "../../i18n";
+import { getNavigation } from "../../data/navigation";
+import { getLocalizedPath } from "../../data/site";
+
+const { locale } = Astro.props as { locale: Locale };
+const t = useTranslations(locale);
+const navigation = getNavigation(locale);
+---
+
+<header class="absolute inset-x-0 top-0 z-20 py-8 text-white">
+  <Container>
+    <div class="grid items-center gap-6 lg:grid-cols-[1fr_auto_1fr]">
+      <nav
+        class="hidden items-center gap-8 text-[15px] font-medium lg:flex"
+        aria-label="Primary navigation"
+      >
+        {
+          navigation.primary.map((item) => (
+            <a class="transition hover:text-[#f4e8d0]" href={item.href}>
+              {t.nav[item.key]}
+            </a>
+          ))
+        }
+      </nav>
+
+      <a
+        class="flex items-center justify-center gap-3 justify-self-start lg:justify-self-center"
+        href={getLocalizedPath(locale)}
+        aria-label="Vicino home"
+      >
+        <span
+          class="grid size-9 place-items-center rounded-full border border-white/90 text-[17px] leading-none"
+          >🍴</span
+        >
+        <span
+          class="text-5xl font-black lowercase leading-none tracking-[-0.08em] md:text-6xl"
+          >vicino</span
+        >
+      </a>
+
+      <div
+        class="flex items-center justify-end gap-5 justify-self-end text-[15px] font-medium"
+      >
+        <nav
+          class="hidden items-center gap-8 lg:flex"
+          aria-label="Secondary navigation"
+        >
+          {
+            navigation.secondary.map((item) => (
+              <a class="transition hover:text-[#f4e8d0]" href={item.href}>
+                {t.nav[item.key]}
+              </a>
+            ))
+          }
+        </nav>
+
+        <div
+          class="hidden items-center gap-1 text-xs font-semibold uppercase tracking-[0.16em] text-white/70 sm:flex"
+          aria-label="Language selection"
+        >
+          {
+            locales.map((availableLocale) => (
+              <a
+                class:list={[
+                  "rounded-full px-2 py-1 transition hover:text-white",
+                  availableLocale === locale &&
+                    "bg-white text-black hover:text-black",
+                ]}
+                href={getLocalizedPath(availableLocale)}
+                hreflang={availableLocale}
+                aria-label={localeLabels[availableLocale]}
+              >
+                {availableLocale}
+              </a>
+            ))
+          }
+        </div>
+
+        <a
+          class="hidden rounded-full border border-[#f4e8d0] px-9 py-3.5 text-sm transition hover:bg-[#f4e8d0] hover:text-black md:inline-flex"
+          href="#demo"
+        >
+          {t.nav.createPreview}
+        </a>
+      </div>
+    </div>
+  </Container>
+</header>

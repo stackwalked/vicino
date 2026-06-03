@@ -1,0 +1,20 @@
+---
+import { getLocalizedPath } from '../data/site';
+import { defaultLocale } from '../i18n/config';
+
+const destination = getLocalizedPath(defaultLocale);
+---
+
+<!doctype html>
+<html lang={defaultLocale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="refresh" content={`0; url=${destination}`} />
+    <link rel="canonical" href={destination} />
+    <title>Vicino</title>
+  </head>
+  <body>
+    <p><a href={destination}>Continue to Vicino</a></p>
+  </body>
+</html>

@@ -1,0 +1,115 @@
+---
+import Container from "../ui/Container.astro";
+import type { Locale } from "../../i18n/config";
+import { useTranslations } from "../../i18n";
+import { getNavigation } from "../../data/navigation";
+
+const { locale } = Astro.props as { locale: Locale };
+const t = useTranslations(locale);
+const navigation = getNavigation(locale);
+const footerNavigation = [...navigation.primary, ...navigation.secondary];
+---
+
+<footer
+  id="contact"
+  class="border-t border-white/10 bg-[#111113] py-14 text-white md:py-20"
+>
+  <Container>
+    <div
+      class="grid gap-12 text-sm md:grid-cols-[1.5fr_0.9fr_0.9fr_0.9fr] md:gap-16"
+    >
+      <div>
+        <h2 class="text-sm font-semibold text-white/45">Contact Us</h2>
+        <ul class="mt-5 space-y-3 text-white/90">
+          <li>
+            <a class="transition hover:text-[#f4e8d0]" href="tel:+393475829146"
+              >+39 347 582 9146</a
+            >
+          </li>
+          <li>
+            <a
+              class="transition hover:text-[#f4e8d0]"
+              href="mailto:hello@byvicino.it">hello@byvicino.it</a
+            >
+          </li>
+        </ul>
+      </div>
+
+      <nav aria-label="Footer navigation">
+        <h2 class="text-sm font-bold uppercase tracking-[0.08em] text-white/45">
+          Vicino
+        </h2>
+        <ul class="mt-5 space-y-3 text-white/90">
+          {
+            footerNavigation.map((item) => (
+              <li>
+                <a class="transition hover:text-[#f4e8d0]" href={item.href}>
+                  {t.nav[item.key]}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <nav aria-label="Social links">
+        <h2 class="text-sm font-semibold text-white/45">Follow Us</h2>
+        <ul class="mt-5 space-y-3 text-white/90">
+          <li>
+            <a
+              class="transition hover:text-[#f4e8d0]"
+              href="https://www.instagram.com/"
+              rel="noreferrer"
+              target="_blank">Instagram</a>
+          </li>
+          <li>
+            <a
+              class="transition hover:text-[#f4e8d0]"
+              href="https://www.facebook.com/"
+              rel="noreferrer"
+              target="_blank">Facebook</a>
+          </li>
+          <li>
+            <a
+              class="transition hover:text-[#f4e8d0]"
+              href="https://www.tiktok.com/"
+              rel="noreferrer"
+              target="_blank">TikTok</a>
+          </li>
+        </ul>
+      </nav>
+
+      <nav aria-label="Legal links">
+        <h2 class="text-sm font-semibold text-white/45">Terms</h2>
+        <ul class="mt-5 space-y-3 text-white/90">
+          <li>
+            <a class="transition hover:text-[#f4e8d0]" href="#terms">Terms</a>
+          </li>
+          <li>
+            <a class="transition hover:text-[#f4e8d0]" href="#privacy"
+              >Privacy Policy</a>
+          </li>
+          <li>
+            <a class="transition hover:text-[#f4e8d0]" href="#cookies"
+              >Cookie Policy</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <a
+      class="mx-auto mt-16 flex w-fit items-center justify-center gap-3 md:mt-20"
+      href={`/${locale}/`}
+      aria-label="Vicino home"
+    >
+      <span
+        class="grid size-9 place-items-center rounded-full border border-white/90 text-[17px] leading-none"
+        >🍴</span
+      >
+      <span
+        class="text-5xl font-black lowercase leading-none tracking-[-0.08em] md:text-6xl"
+        >vicino</span
+      >
+    </a>
+  </Container>
+</footer>

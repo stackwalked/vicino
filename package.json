@@ -1,0 +1,23 @@
+{
+  "name": "vicino-monorepo",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "sites/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "bun --filter @vicino/www dev",
+    "build": "bun --filter @vicino/www build",
+    "preview": "bun --filter @vicino/www preview",
+    "check": "bun --filter @vicino/www check",
+    "deploy": "bun --filter @vicino/www deploy",
+    "format": "bun -b prettier --write ."
+  },
+  "devDependencies": {
+    "prettier": "latest",
+    "prettier-plugin-astro": "latest"
+  }
+}

@@ -1,0 +1,111 @@
+---
+import "../assets/styles/global.css";
+import SiteHeader from "../components/global/SiteHeader.astro";
+import SiteFooter from "../components/global/SiteFooter.astro";
+import {
+  createOrganizationSchema,
+  createProfessionalServiceSchema,
+  createWebsiteSchema,
+  getLocaleDefinition,
+  stringifyJsonLd,
+  type JsonLdValue,
+} from "@vicino/site-kit";
+import { localeConfig, type Locale } from "../i18n/config";
+import { site } from "../data/site";
+
+type Alternate = {
+  locale: Locale;
+  href: string;
+};
+
+type Props = {
+  locale: Locale;
+  title: string;
+  description: string;
+  canonical: string;
+  alternates: Alternate[];
+  imageUrl?: string;
+  xDefault: string;
+  robots?: string;
+  jsonLd?: JsonLdValue[];
+};
+
+const {
+  locale,
+  title,
+  description,
+  canonical,
+  alternates,
+  imageUrl,
+  xDefault,
+  robots,
+  jsonLd = [],
+} = Astro.props;
+const localeDefinition = getLocaleDefinition(localeConfig, locale);
+const defaultJsonLd = [
+  createOrganizationSchema({ site, description }),
+  createWebsiteSchema({
+    site,
+    description,
+    inLanguage: localeDefinition?.languageTag ?? locale,
+  }),
+  createProfessionalServiceSchema({
+    site,
+    description,
+    inLanguage: localeDefinition?.languageTag ?? locale,
+  }),
+];
+const structuredData = [...defaultJsonLd, ...jsonLd];
+---
+
+<!doctype html>
+<html lang={localeDefinition?.languageTag ?? locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {robots && <meta name="robots" content={robots} />}
+    {
+      alternates.map((alternate) => (
+        <link
+          rel="alternate"
+          hreflang={alternate.locale}
+          href={alternate.href}
+        />
+      ))
+    }
+    <link rel="alternate" hreflang="x-default" href={xDefault} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content={localeDefinition?.ogLocale ?? locale} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    {imageUrl && <meta property="og:image" content={imageUrl} />}
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    {imageUrl && <meta name="twitter:image" content={imageUrl} />}
+    {
+      structuredData.map((schema) => (
+        <script
+          is:inline
+          type="application/ld+json"
+          set:html={stringifyJsonLd(schema)}
+        />
+      ))
+    }
+  </head>
+  <body>
+    <SiteHeader locale={locale} />
+    <main>
+      <slot />
+    </main>
+    <SiteFooter locale={locale} />
+  </body>
+</html>
