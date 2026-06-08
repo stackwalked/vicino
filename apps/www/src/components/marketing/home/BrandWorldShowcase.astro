@@ -1,7 +1,7 @@
 ---
 import { Image, getImage } from "astro:assets";
 import fineDiningPhoto from "../../../assets/images/brand-worlds/fine-dining-photo.png";
-import fineDiningDemo from "../../../assets/images/brand-worlds/fine-dining-demo.png";
+import fineDiningDemo from "../../../assets/images/brand-worlds/fine-dining-demo-new.png";
 import fineDiningAccent from "../../../assets/images/brand-worlds/fine-dining-accent.png";
 import cafePhoto from "../../../assets/images/brand-worlds/cafe-photo.png";
 import cafeDemo from "../../../assets/images/brand-worlds/cafe-demo.png";
@@ -119,13 +119,13 @@ const worldsJson = JSON.stringify(
     </Container>
   </div>
 
-  <div class="relative hidden h-[240vh] md:block">
+  <div class="relative hidden h-[360vh] md:block">
     <div class="pointer-events-none absolute inset-0" aria-hidden="true">
       {
         worlds.map((world, index) => (
           <div
-            class="world-sentinel absolute inset-x-0 h-[60vh]"
-            style={`top: ${index * 60}vh`}
+            class="world-sentinel absolute inset-x-0 h-[90vh]"
+            style={`top: ${index * 90}vh`}
             data-world={world.id}
           />
         ))
@@ -134,19 +134,20 @@ const worldsJson = JSON.stringify(
 
     <div class="sticky top-0 h-screen">
       <div
-        class="world-stage world-fine relative min-h-screen py-20 transition-colors duration-700 md:flex md:items-center"
+        class="world-stage world-fine relative min-h-screen py-20 transition-colors duration-1000 md:flex md:items-center"
         data-world-stage
       >
         <div
           class="absolute inset-0 opacity-45 transition-opacity duration-700 world-pattern"
         >
         </div>
-        <Container class="relative max-w-[1540px]">
+        <Container class="relative z-10 max-w-[1540px]">
           <div
             class="grid gap-10 md:grid-cols-[0.68fr_1.32fr] md:items-center xl:gap-14"
           >
             <div
               class="rounded-[2.4rem] border border-[rgb(var(--world-border))] bg-[rgb(var(--world-surface)/0.72)] p-7 shadow-2xl backdrop-blur-md md:p-9 xl:p-10"
+              data-world-copy
             >
               <div class="flex items-center justify-between gap-5">
                 <p
@@ -202,6 +203,7 @@ const worldsJson = JSON.stringify(
 
             <div
               class="relative min-h-[580px] overflow-hidden rounded-[3.25rem] border border-[rgb(var(--world-border))] bg-[rgb(var(--world-surface)/0.8)] p-6 shadow-2xl backdrop-blur-md lg:p-8 xl:min-h-[680px] xl:p-10"
+              data-world-media
             >
               <Image
                 class="world-photo"
@@ -235,7 +237,11 @@ const worldsJson = JSON.stringify(
                 class="world-visual relative z-10 mt-8 min-h-[470px] xl:min-h-[560px]"
                 data-world-visual
               >
-                <div class="world-browser" aria-hidden="true">
+                <div
+                  class="world-browser"
+                  aria-hidden="true"
+                  data-world-browser
+                >
                   <div class="world-browser-bar">
                     <span></span><span></span><span></span>
                     <p>vicino.com</p>
@@ -331,6 +337,9 @@ const worldsJson = JSON.stringify(
       takeaway: stage.querySelector("[data-world-takeaway]"),
       type: stage.querySelector("[data-world-type]"),
       browserLabel: stage.querySelector("[data-world-browser-label]"),
+      copy: stage.querySelector("[data-world-copy]"),
+      media: stage.querySelector("[data-world-media]"),
+      browser: stage.querySelector("[data-world-browser]"),
       photo: stage.querySelector("[data-world-photo]"),
       demo: stage.querySelector("[data-world-demo]"),
       accent: stage.querySelector("[data-world-accent]"),
@@ -339,6 +348,8 @@ const worldsJson = JSON.stringify(
     const sentinels = [...root.querySelectorAll("[data-world]")];
     const worldClasses = worlds.map((item) => `world-${item.palette}`);
     let activeWorldId = worlds[0]?.id;
+    let isTransitioning = false;
+    let queuedWorldId = null;
     const motionSafe = !window.matchMedia("(prefers-reduced-motion: reduce)")
       .matches;
 
@@ -356,14 +367,179 @@ const worldsJson = JSON.stringify(
       }
     }
 
-    function setWorld(worldId) {
-      if (!worlds.length || worldId === activeWorldId) return;
+    async function animateElement(element, keyframes, options) {
+      if (!motionSafe || !(element instanceof Element)) return;
 
-      const world = worlds.find((item) => item.id === worldId) ?? worlds[0];
+      const animation = element.animate(keyframes, options);
+      await animation.finished.catch(() => undefined);
+    }
+
+    function animateOut() {
+      const copyElements = [
+        fields.label,
+        fields.theme,
+        fields.headline,
+        fields.description,
+        fields.takeaway,
+      ].filter(Boolean);
+      const mediaElements = [
+        fields.photo,
+        fields.browser,
+        fields.accent,
+        fields.media,
+      ].filter(Boolean);
+
+      return Promise.all([
+        ...copyElements.map((element, index) =>
+          animateElement(
+            element,
+            [
+              { opacity: 1, transform: "translateY(0)", filter: "blur(0px)" },
+              {
+                opacity: 0,
+                transform: "translateY(10px)",
+                filter: "blur(2px)",
+              },
+            ],
+            {
+              duration: 220,
+              delay: index * 28,
+              fill: "forwards",
+              easing: "cubic-bezier(0.55, 0, 1, 0.45)",
+            },
+          ),
+        ),
+        ...mediaElements.map((element, index) =>
+          animateElement(
+            element,
+            [
+              { opacity: 1, filter: "blur(0px) saturate(1)" },
+              { opacity: 0.42, filter: "blur(3px) saturate(0.75)" },
+            ],
+            {
+              duration: 260,
+              delay: 70 + index * 35,
+              fill: "forwards",
+              easing: "cubic-bezier(0.55, 0, 1, 0.45)",
+            },
+          ),
+        ),
+      ]);
+    }
+
+    function animateIn() {
+      const copyElements = [
+        fields.label,
+        fields.theme,
+        fields.headline,
+        fields.description,
+        fields.takeaway,
+      ].filter(Boolean);
+      const mediaElements = [
+        fields.photo,
+        fields.browser,
+        fields.accent,
+      ].filter(Boolean);
+
+      copyElements.forEach((element) =>
+        element.getAnimations().forEach((animation) => animation.cancel()),
+      );
+      mediaElements.forEach((element) =>
+        element.getAnimations().forEach((animation) => animation.cancel()),
+      );
+      fields.media?.getAnimations().forEach((animation) => animation.cancel());
+
+      copyElements.forEach((element) => {
+        element.style.opacity = "0";
+        element.style.transform = "translateY(14px)";
+        element.style.filter = "blur(2px)";
+      });
+      mediaElements.forEach((element) => {
+        element.style.opacity = "0.5";
+        element.style.filter = "blur(3px) saturate(0.8)";
+      });
+      if (fields.media instanceof HTMLElement) {
+        fields.media.style.opacity = "0.68";
+        fields.media.style.filter = "blur(2px) saturate(0.88)";
+      }
+
+      requestAnimationFrame(() => {
+        const mediaPanelAnimation = fields.media?.animate(
+          [
+            { opacity: 0.68, filter: "blur(2px) saturate(0.88)" },
+            { opacity: 1, filter: "blur(0px) saturate(1)" },
+          ],
+          {
+            duration: 760,
+            fill: "forwards",
+            easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+          },
+        );
+
+        mediaPanelAnimation?.finished
+          .then(() => {
+            if (fields.media instanceof HTMLElement) {
+              fields.media.style.opacity = "";
+              fields.media.style.filter = "";
+            }
+          })
+          .catch(() => undefined);
+
+        mediaElements.forEach((element, index) => {
+          const animation = element.animate(
+            [
+              { opacity: 0.5, filter: "blur(3px) saturate(0.8)" },
+              { opacity: 1, filter: "blur(0px) saturate(1)" },
+            ],
+            {
+              duration: 820,
+              delay: 80 + index * 95,
+              fill: "forwards",
+              easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+            },
+          );
+
+          animation.finished
+            .then(() => {
+              element.style.opacity = "";
+              element.style.filter = "";
+            })
+            .catch(() => undefined);
+        });
+
+        copyElements.forEach((element, index) => {
+          const animation = element.animate(
+            [
+              {
+                opacity: 0,
+                transform: "translateY(14px)",
+                filter: "blur(2px)",
+              },
+              { opacity: 1, transform: "translateY(0)", filter: "blur(0px)" },
+            ],
+            {
+              duration: 620,
+              delay: 170 + index * 72,
+              fill: "forwards",
+              easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+            },
+          );
+
+          animation.finished
+            .then(() => {
+              element.style.opacity = "";
+              element.style.transform = "";
+              element.style.filter = "";
+            })
+            .catch(() => undefined);
+        });
+      });
+    }
+
+    function applyWorld(world) {
       activeWorldId = world.id;
       stage.classList.remove(...worldClasses);
       stage.classList.add(`world-${world.palette}`);
-      if (motionSafe) stage.classList.add("is-changing");
 
       setText(fields.label, world.label);
       setText(fields.theme, world.theme);
@@ -382,8 +558,45 @@ const worldsJson = JSON.stringify(
         button.classList.toggle("bg-[rgb(var(--world-text)/0.22)]", !active);
         button.setAttribute("aria-pressed", String(active));
       });
+    }
 
-      window.setTimeout(() => stage.classList.remove("is-changing"), 260);
+    async function setWorld(worldId) {
+      if (!worlds.length || worldId === activeWorldId) return;
+
+      if (isTransitioning) {
+        queuedWorldId = worldId;
+        return;
+      }
+
+      const world = worlds.find((item) => item.id === worldId) ?? worlds[0];
+
+      if (!motionSafe) {
+        applyWorld(world);
+        return;
+      }
+
+      isTransitioning = true;
+      stage.classList.add("is-changing");
+
+      await animateOut();
+      applyWorld(world);
+      animateIn();
+
+      window.setTimeout(() => {
+        stage.classList.remove("is-changing");
+      }, 620);
+
+      window.setTimeout(() => {
+        isTransitioning = false;
+
+        if (queuedWorldId && queuedWorldId !== activeWorldId) {
+          const nextWorldId = queuedWorldId;
+          queuedWorldId = null;
+          setWorld(nextWorldId);
+        } else {
+          queuedWorldId = null;
+        }
+      }, 980);
     }
 
     buttons.forEach((button) =>
