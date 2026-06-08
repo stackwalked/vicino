@@ -1,0 +1,407 @@
+---
+import { Image, getImage } from "astro:assets";
+import fineDiningPhoto from "../../../assets/images/brand-worlds/fine-dining-photo.png";
+import fineDiningDemo from "../../../assets/images/brand-worlds/fine-dining-demo.png";
+import fineDiningAccent from "../../../assets/images/brand-worlds/fine-dining-accent.png";
+import cafePhoto from "../../../assets/images/brand-worlds/cafe-photo.png";
+import cafeDemo from "../../../assets/images/brand-worlds/cafe-demo.png";
+import cafeAccent from "../../../assets/images/brand-worlds/cafe-accent.png";
+import streetPhoto from "../../../assets/images/brand-worlds/street-photo.png";
+import streetDemo from "../../../assets/images/brand-worlds/street-demo.png";
+import streetAccent from "../../../assets/images/brand-worlds/street-accent.png";
+import gelatoPhoto from "../../../assets/images/brand-worlds/gelato-photo.png";
+import gelatoDemo from "../../../assets/images/brand-worlds/gelato-demo.png";
+import gelatoAccent from "../../../assets/images/brand-worlds/gelato-accent.png";
+import type { Locale } from "../../../i18n/config";
+import { useTranslations } from "../../../i18n";
+import Container from "../../ui/Container.astro";
+
+const { locale } = Astro.props as { locale: Locale };
+const t = useTranslations(locale);
+const worldAssets = {
+  "fine-dining": {
+    photoAsset: fineDiningPhoto,
+    demoAsset: fineDiningDemo,
+    accentAsset: fineDiningAccent,
+  },
+  "neighborhood-cafe": {
+    photoAsset: cafePhoto,
+    demoAsset: cafeDemo,
+    accentAsset: cafeAccent,
+  },
+  "street-food": {
+    photoAsset: streetPhoto,
+    demoAsset: streetDemo,
+    accentAsset: streetAccent,
+  },
+  gelato: {
+    photoAsset: gelatoPhoto,
+    demoAsset: gelatoDemo,
+    accentAsset: gelatoAccent,
+  },
+} as const;
+const worlds = await Promise.all(
+  t.home.worlds.items.map(async (world) => {
+    const assets = worldAssets[world.id as keyof typeof worldAssets];
+    const [photo, demo, accent] = await Promise.all([
+      getImage({ src: assets.photoAsset, width: 1200, format: "webp" }),
+      getImage({ src: assets.demoAsset, width: 1200, format: "webp" }),
+      getImage({ src: assets.accentAsset, width: 360, format: "webp" }),
+    ]);
+
+    return {
+      ...world,
+      ...assets,
+      photo: photo.src,
+      demo: demo.src,
+      accent: accent.src,
+    };
+  }),
+);
+const worldsJson = JSON.stringify(
+  worlds.map(
+    ({
+      id,
+      palette,
+      label,
+      businessType,
+      theme,
+      headline,
+      description,
+      takeaway,
+      photo,
+      demo,
+      accent,
+    }) => ({
+      id,
+      palette,
+      label,
+      businessType,
+      theme,
+      headline,
+      description,
+      takeaway,
+      photo,
+      demo,
+      accent,
+    }),
+  ),
+);
+---
+
+<section
+  id="styles"
+  class="brand-worlds relative overflow-clip bg-[#f4e8d0] text-black"
+  data-brand-worlds
+  data-worlds={worldsJson}
+>
+  <div class="py-20 md:py-28">
+    <Container>
+      <div class="grid gap-8 md:grid-cols-[1fr_1fr] md:items-end">
+        <div>
+          <p
+            class="text-sm font-semibold uppercase tracking-[0.26em] text-black/50"
+          >
+            {t.home.worlds.label}
+          </p>
+          <h2
+            class="mt-5 max-w-4xl text-4xl font-black leading-[0.96] tracking-[-0.06em] md:text-6xl"
+          >
+            {t.home.worlds.title}
+          </h2>
+        </div>
+        <p
+          class="max-w-xl text-xl leading-8 tracking-[-0.035em] text-black/64 md:justify-self-end"
+        >
+          {t.home.worlds.text}
+        </p>
+      </div>
+    </Container>
+  </div>
+
+  <div class="relative hidden h-[240vh] md:block">
+    <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+      {
+        worlds.map((world, index) => (
+          <div
+            class="world-sentinel absolute inset-x-0 h-[60vh]"
+            style={`top: ${index * 60}vh`}
+            data-world={world.id}
+          />
+        ))
+      }
+    </div>
+
+    <div class="sticky top-0 h-screen">
+      <div
+        class="world-stage world-fine relative min-h-screen py-20 transition-colors duration-700 md:flex md:items-center"
+        data-world-stage
+      >
+        <div
+          class="absolute inset-0 opacity-45 transition-opacity duration-700 world-pattern"
+        >
+        </div>
+        <Container class="relative max-w-[1540px]">
+          <div
+            class="grid gap-10 md:grid-cols-[0.68fr_1.32fr] md:items-center xl:gap-14"
+          >
+            <div
+              class="rounded-[2.4rem] border border-[rgb(var(--world-border))] bg-[rgb(var(--world-surface)/0.72)] p-7 shadow-2xl backdrop-blur-md md:p-9 xl:p-10"
+            >
+              <div class="flex items-center justify-between gap-5">
+                <p
+                  class="text-xs font-bold uppercase tracking-[0.24em] text-[rgb(var(--world-muted))]"
+                  data-world-label
+                >
+                  {worlds[0].label}
+                </p>
+                <div class="flex gap-2">
+                  {
+                    worlds.map((world, index) => (
+                      <button
+                        class:list={[
+                          "size-3 rounded-full transition focus-visible:outline-offset-4",
+                          index === 0
+                            ? "bg-[rgb(var(--world-accent))]"
+                            : "bg-[rgb(var(--world-text)/0.22)]",
+                        ]}
+                        type="button"
+                        data-world-button={world.id}
+                        aria-label={`${t.home.worlds.switchLabel} ${world.businessType}`}
+                        aria-pressed={index === 0 ? "true" : "false"}
+                      />
+                    ))
+                  }
+                </div>
+              </div>
+              <p
+                class="mt-9 font-serif text-2xl italic text-[rgb(var(--world-accent))]"
+                data-world-theme
+              >
+                {worlds[0].theme}
+              </p>
+              <h3
+                class="mt-4 max-w-2xl text-4xl font-black leading-[0.96] tracking-[-0.06em] text-[rgb(var(--world-text))] lg:text-5xl xl:text-6xl"
+                data-world-headline
+              >
+                {worlds[0].headline}
+              </h3>
+              <p
+                class="mt-6 max-w-xl text-lg leading-8 tracking-[-0.03em] text-[rgb(var(--world-muted))]"
+                data-world-description
+              >
+                {worlds[0].description}
+              </p>
+              <div
+                class="mt-8 rounded-3xl border border-[rgb(var(--world-border))] bg-[rgb(var(--world-text)/0.06)] p-5 text-sm font-semibold leading-6 text-[rgb(var(--world-text))]"
+                data-world-takeaway
+              >
+                {worlds[0].takeaway}
+              </div>
+            </div>
+
+            <div
+              class="relative min-h-[580px] overflow-hidden rounded-[3.25rem] border border-[rgb(var(--world-border))] bg-[rgb(var(--world-surface)/0.8)] p-6 shadow-2xl backdrop-blur-md lg:p-8 xl:min-h-[680px] xl:p-10"
+            >
+              <Image
+                class="world-photo"
+                src={worlds[0].photoAsset}
+                alt=""
+                width={1200}
+                format="webp"
+                loading="lazy"
+                decoding="async"
+                data-world-photo
+              />
+              <div class="world-photo-scrim"></div>
+              <div
+                class="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-[rgb(var(--world-accent)/0.25)] blur-3xl"
+              >
+              </div>
+              <div
+                class="relative z-10 flex items-center justify-between border-b border-[rgb(var(--world-border))] pb-5 text-[rgb(var(--world-muted))]"
+              >
+                <span
+                  class="text-xs font-bold uppercase tracking-[0.22em]"
+                  data-world-type>{worlds[0].businessType}</span
+                >
+                <span
+                  class="rounded-full border border-[rgb(var(--world-border))] px-4 py-2 text-xs font-semibold"
+                  >vicino study</span
+                >
+              </div>
+
+              <div
+                class="world-visual relative z-10 mt-8 min-h-[470px] xl:min-h-[560px]"
+                data-world-visual
+              >
+                <div class="world-browser" aria-hidden="true">
+                  <div class="world-browser-bar">
+                    <span></span><span></span><span></span>
+                    <p>vicino.com</p>
+                    <strong data-world-browser-label
+                      >{worlds[0].businessType}</strong
+                    >
+                  </div>
+                  <Image
+                    src={worlds[0].demoAsset}
+                    alt=""
+                    width={1200}
+                    format="webp"
+                    loading="lazy"
+                    decoding="async"
+                    data-world-demo
+                  />
+                </div>
+                <Image
+                  class="world-accent-img"
+                  src={worlds[0].accentAsset}
+                  alt=""
+                  width={360}
+                  format="webp"
+                  loading="lazy"
+                  decoding="async"
+                  data-world-accent
+                />
+                <div class="world-orbit one"></div>
+                <div class="world-orbit two"></div>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid gap-5 px-5 pb-20 md:hidden">
+    {
+      worlds.map((world) => (
+        <article
+          class:list={[
+            "overflow-hidden rounded-[2rem] p-6 shadow-xl",
+            `world-${world.palette}`,
+          ]}
+        >
+          <p class="text-xs font-bold uppercase tracking-[0.22em] text-[rgb(var(--world-muted))]">
+            {world.label}
+          </p>
+          <h3 class="mt-4 text-3xl font-black leading-none tracking-[-0.055em] text-[rgb(var(--world-text))]">
+            {world.businessType}
+          </h3>
+          <p class="mt-5 text-xl font-semibold leading-7 tracking-[-0.04em] text-[rgb(var(--world-text))]">
+            {world.headline}
+          </p>
+          <div class="relative mt-5 aspect-[16/10] overflow-hidden rounded-3xl border border-[rgb(var(--world-border))]">
+            <Image
+              class="size-full object-cover"
+              src={world.demoAsset}
+              alt=""
+              width={900}
+              format="webp"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          <p class="mt-4 leading-7 text-[rgb(var(--world-muted))]">
+            {world.description}
+          </p>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<script is:inline>
+  const root = document.querySelector("[data-brand-worlds]");
+  const stage = document.querySelector("[data-world-stage]");
+
+  if (root instanceof HTMLElement && stage) {
+    let worlds = [];
+
+    try {
+      worlds = JSON.parse(root.dataset.worlds ?? "[]");
+    } catch {
+      worlds = [];
+    }
+    const fields = {
+      label: stage.querySelector("[data-world-label]"),
+      theme: stage.querySelector("[data-world-theme]"),
+      headline: stage.querySelector("[data-world-headline]"),
+      description: stage.querySelector("[data-world-description]"),
+      takeaway: stage.querySelector("[data-world-takeaway]"),
+      type: stage.querySelector("[data-world-type]"),
+      browserLabel: stage.querySelector("[data-world-browser-label]"),
+      photo: stage.querySelector("[data-world-photo]"),
+      demo: stage.querySelector("[data-world-demo]"),
+      accent: stage.querySelector("[data-world-accent]"),
+    };
+    const buttons = [...stage.querySelectorAll("[data-world-button]")];
+    const sentinels = [...root.querySelectorAll("[data-world]")];
+    const worldClasses = worlds.map((item) => `world-${item.palette}`);
+    let activeWorldId = worlds[0]?.id;
+    const motionSafe = !window.matchMedia("(prefers-reduced-motion: reduce)")
+      .matches;
+
+    function setText(target, value) {
+      if (target) target.textContent = value ?? "";
+    }
+
+    function setImage(target, src) {
+      if (
+        target instanceof HTMLImageElement &&
+        src &&
+        target.getAttribute("src") !== src
+      ) {
+        target.src = src;
+      }
+    }
+
+    function setWorld(worldId) {
+      if (!worlds.length || worldId === activeWorldId) return;
+
+      const world = worlds.find((item) => item.id === worldId) ?? worlds[0];
+      activeWorldId = world.id;
+      stage.classList.remove(...worldClasses);
+      stage.classList.add(`world-${world.palette}`);
+      if (motionSafe) stage.classList.add("is-changing");
+
+      setText(fields.label, world.label);
+      setText(fields.theme, world.theme);
+      setText(fields.headline, world.headline);
+      setText(fields.description, world.description);
+      setText(fields.takeaway, world.takeaway);
+      setText(fields.type, world.businessType);
+      setText(fields.browserLabel, world.businessType);
+      setImage(fields.photo, world.photo);
+      setImage(fields.demo, world.demo);
+      setImage(fields.accent, world.accent);
+
+      buttons.forEach((button) => {
+        const active = button.dataset.worldButton === world.id;
+        button.classList.toggle("bg-[rgb(var(--world-accent))]", active);
+        button.classList.toggle("bg-[rgb(var(--world-text)/0.22)]", !active);
+        button.setAttribute("aria-pressed", String(active));
+      });
+
+      window.setTimeout(() => stage.classList.remove("is-changing"), 260);
+    }
+
+    buttons.forEach((button) =>
+      button.addEventListener("click", () =>
+        setWorld(button.dataset.worldButton),
+      ),
+    );
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setWorld(visible.target.dataset.world);
+      },
+      { threshold: [0.35, 0.55, 0.75], rootMargin: "-18% 0px -18% 0px" },
+    );
+
+    sentinels.forEach((sentinel) => observer.observe(sentinel));
+  }
+</script>

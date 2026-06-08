@@ -12,12 +12,14 @@
     "cf:preview": "bun -b wrangler pages dev dist"
   },
   "dependencies": {
-    "@vicino/site-kit": "workspace:*"
+    "@vicino/site-kit": "workspace:*",
+    "motion": "^12.40.0"
   },
   "devDependencies": {
     "@astrojs/check": "latest",
     "@tailwindcss/vite": "latest",
     "astro": "latest",
+    "sharp": "^0.34.5",
     "tailwindcss": "latest",
     "typescript": "latest",
     "wrangler": "latest"

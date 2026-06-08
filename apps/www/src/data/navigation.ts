@@ -8,11 +8,12 @@ export function getNavigation(locale: Locale) {
     primary: [
       { key: "concept", href: `${basePath}#concept` },
       { key: "styles", href: `${basePath}#styles` },
-      { key: "demo", href: `${basePath}#demo` },
+      { key: "services", href: `${basePath}#services` },
+      { key: "pricing", href: `${basePath}#pricing` },
     ],
     secondary: [
-      { key: "pricing", href: `${basePath}#pricing` },
-      { key: "contact", href: `${basePath}#contact` },
+      { key: "process", href: `${basePath}#process` },
+      { key: "contact", href: `${basePath}#contact-details` },
     ],
   } as const;
 }

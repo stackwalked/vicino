@@ -1,0 +1,52 @@
+---
+import type { Locale } from "../../../i18n/config";
+import { useTranslations } from "../../../i18n";
+import Container from "../../ui/Container.astro";
+
+const { locale } = Astro.props as { locale: Locale };
+const t = useTranslations(locale);
+---
+
+<section
+  id="start-project"
+  class="relative overflow-hidden bg-[#111113] py-20 text-white md:py-32"
+>
+  <div
+    class="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(244,232,208,0.12),transparent_34rem)]"
+  >
+  </div>
+  <Container class="relative">
+    <div
+      class="mx-auto max-w-5xl rounded-[2.75rem] border border-white/10 bg-white/[0.035] p-8 text-center shadow-2xl md:p-14"
+      data-motion-reveal
+    >
+      <p
+        class="text-sm font-semibold uppercase tracking-[0.26em] text-[#f4e8d0]/75"
+      >
+        {t.home.finalCta.label}
+      </p>
+      <h2
+        class="mt-5 text-4xl font-black leading-[0.96] tracking-[-0.06em] text-[#eee7da] md:text-7xl"
+      >
+        {t.home.finalCta.title}
+      </h2>
+      <p
+        class="mx-auto mt-7 max-w-2xl text-xl leading-8 tracking-[-0.035em] text-white/76"
+      >
+        {t.home.finalCta.text}
+      </p>
+      <div
+        class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
+      >
+        <a
+          class="inline-flex rounded-full bg-[#f4e8d0] px-9 py-5 text-lg font-semibold tracking-[-0.035em] !text-[#111113] transition duration-300 hover:-translate-y-0.5 hover:bg-white hover:!text-[#111113]"
+          href="#contact-details">{t.home.finalCta.primaryCta}</a
+        >
+        <a
+          class="inline-flex rounded-full border border-white/25 px-8 py-5 text-base font-semibold text-white/82 transition duration-300 hover:border-[#f4e8d0] hover:text-[#f4e8d0]"
+          href="#styles">{t.home.finalCta.secondaryCta}</a
+        >
+      </div>
+    </div>
+  </Container>
+</section>

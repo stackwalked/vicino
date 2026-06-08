@@ -2,7 +2,7 @@
   color-scheme: light;
 
   --font-sans:
-    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    Manrope, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", sans-serif;
   --font-serif: "Instrument Serif", Georgia, Cambria, "Times New Roman", serif;
 
@@ -20,4 +20,44 @@
   --radius-md: 1.25rem;
   --radius-lg: 2rem;
   --radius-xl: 2.75rem;
+}
+
+.world-fine {
+  --world-bg: 19 13 14;
+  --world-surface: 43 28 31;
+  --world-text: 248 238 222;
+  --world-muted: 211 188 164;
+  --world-accent: 174 74 72;
+  --world-pop: 226 151 80;
+  --world-border: 248 238 222 / 0.16;
+}
+
+.world-cafe {
+  --world-bg: 240 222 194;
+  --world-surface: 255 248 235;
+  --world-text: 52 37 28;
+  --world-muted: 113 83 59;
+  --world-accent: 153 84 48;
+  --world-pop: 92 118 76;
+  --world-border: 52 37 28 / 0.14;
+}
+
+.world-street {
+  --world-bg: 30 29 26;
+  --world-surface: 246 204 83;
+  --world-text: 19 18 16;
+  --world-muted: 70 51 34;
+  --world-accent: 210 52 37;
+  --world-pop: 246 204 83;
+  --world-border: 19 18 16 / 0.18;
+}
+
+.world-gelato {
+  --world-bg: 251 235 226;
+  --world-surface: 255 250 241;
+  --world-text: 63 48 75;
+  --world-muted: 126 87 108;
+  --world-accent: 220 95 132;
+  --world-pop: 249 196 94;
+  --world-border: 63 48 75 / 0.13;
 }

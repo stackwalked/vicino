@@ -1,0 +1,157 @@
+---
+import type { Locale } from "../../../i18n/config";
+import { useTranslations } from "../../../i18n";
+import Container from "../../ui/Container.astro";
+
+const { locale } = Astro.props as { locale: Locale };
+const t = useTranslations(locale);
+---
+
+<section
+  id="concept"
+  class="relative overflow-hidden bg-[#0d0d0d] py-20 text-white md:py-32"
+  data-benefits-section
+>
+  <div
+    class="absolute left-0 top-10 h-72 w-72 rounded-full bg-[#b55635]/10 blur-3xl"
+  >
+  </div>
+  <div
+    class="absolute right-0 bottom-10 h-96 w-96 rounded-full bg-[#f4e8d0]/8 blur-3xl"
+  >
+  </div>
+
+  <Container class="relative">
+    <div
+      class="grid gap-12 border-t border-white/10 pt-14 lg:grid-cols-[0.94fr_1.06fr] lg:items-start"
+    >
+      <div>
+        <p
+          class="text-sm font-semibold uppercase tracking-[0.26em] text-[#f4e8d0]/60"
+        >
+          {t.home.concept.label}
+        </p>
+        <p
+          class="mt-8 max-w-sm font-serif text-3xl italic leading-none text-[#f4e8d0] md:text-4xl"
+        >
+          {t.home.concept.kicker}
+        </p>
+        <a
+          class="mt-9 inline-flex w-fit rounded-full border border-[#f4e8d0]/30 px-6 py-3 text-sm font-semibold text-[#f4e8d0] transition hover:border-[#f4e8d0] hover:bg-[#f4e8d0] hover:!text-[#111113] focus-visible:bg-[#f4e8d0] focus-visible:!text-[#111113]"
+          href="#styles"
+        >
+          {t.home.concept.cta}
+        </a>
+        <p class="mt-4 max-w-xs text-sm leading-6 text-white/45">
+          {t.home.concept.microcopy}
+        </p>
+      </div>
+
+      <div>
+        <h2
+          class="max-w-4xl text-4xl font-black leading-[0.96] tracking-[-0.06em] text-[#eee7da] md:text-6xl"
+        >
+          {t.home.concept.title}
+        </h2>
+        <p
+          class="mt-7 max-w-3xl text-xl leading-8 tracking-[-0.035em] text-white/66 md:text-2xl md:leading-9"
+        >
+          {t.home.concept.text}
+        </p>
+
+        <div
+          class="mt-12 rounded-[2rem] border border-white/10 bg-white/[0.035] p-5 shadow-2xl backdrop-blur md:p-7"
+        >
+          <p
+            class="mb-5 text-xs font-bold uppercase tracking-[0.22em] text-[#f4e8d0]/55"
+          >
+            {t.home.concept.benefitsLabel}
+          </p>
+          <div class="grid gap-3 md:grid-cols-2">
+            {
+              t.home.concept.benefits.map((benefit, index) => {
+                const detailId = `benefit-${locale}-${index}`;
+
+                return (
+                  <div class="relative" data-benefit>
+                    <button
+                      class="group flex min-h-11 w-full items-center justify-between gap-4 rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-left transition hover:border-[#f4e8d0]/40 hover:bg-white/[0.055] focus:bg-white/[0.055]"
+                      type="button"
+                      aria-expanded="false"
+                      aria-controls={detailId}
+                      data-benefit-trigger
+                    >
+                      <span class="text-base font-semibold tracking-[-0.035em] text-white/86 decoration-[#f4e8d0]/45 decoration-dotted underline-offset-4 group-hover:text-[#f4e8d0] group-hover:underline">
+                        {benefit.label}
+                      </span>
+                      <span class="size-2 rounded-full bg-[#f4e8d0]/45 transition group-hover:bg-[#f4e8d0]" />
+                    </button>
+                    <div
+                      id={detailId}
+                      class="mt-2 hidden rounded-2xl border border-[#f4e8d0]/18 bg-[#f4e8d0]/10 p-4 text-sm leading-6 text-white/82"
+                      hidden
+                      data-benefit-detail
+                    >
+                      {benefit.detail}
+                    </div>
+                  </div>
+                );
+              })
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<script is:inline>
+  const benefitsRoot = document.querySelector("[data-benefits-section]");
+
+  if (benefitsRoot) {
+    const items = [...benefitsRoot.querySelectorAll("[data-benefit]")];
+
+    function closeItem(item) {
+      const trigger = item.querySelector("[data-benefit-trigger]");
+      const detail = item.querySelector("[data-benefit-detail]");
+
+      trigger?.setAttribute("aria-expanded", "false");
+      detail?.classList.add("hidden");
+      detail?.setAttribute("hidden", "");
+    }
+
+    function openItem(item) {
+      items.forEach((candidate) => {
+        if (candidate !== item) closeItem(candidate);
+      });
+
+      const trigger = item.querySelector("[data-benefit-trigger]");
+      const detail = item.querySelector("[data-benefit-detail]");
+
+      trigger?.setAttribute("aria-expanded", "true");
+      detail?.classList.remove("hidden");
+      detail?.removeAttribute("hidden");
+    }
+
+    items.forEach((item) => {
+      const trigger = item.querySelector("[data-benefit-trigger]");
+
+      trigger?.addEventListener("click", () => {
+        const expanded = trigger.getAttribute("aria-expanded") === "true";
+
+        if (expanded) closeItem(item);
+        else openItem(item);
+      });
+    });
+
+    benefitsRoot.addEventListener("mouseleave", () => {
+      items.forEach(closeItem);
+    });
+
+    document.addEventListener("click", (event) => {
+      if (event.target instanceof Node && benefitsRoot.contains(event.target))
+        return;
+      items.forEach(closeItem);
+    });
+  }
+</script>

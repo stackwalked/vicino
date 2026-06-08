@@ -1,0 +1,52 @@
+---
+import type { Locale } from "../../../i18n/config";
+import { useTranslations } from "../../../i18n";
+import Container from "../../ui/Container.astro";
+
+const { locale } = Astro.props as { locale: Locale };
+const t = useTranslations(locale);
+---
+
+<section id="services" class="bg-[#0d0d0d] py-20 text-white md:py-32">
+  <Container>
+    <div
+      class="grid gap-10 md:grid-cols-[0.9fr_1.1fr] md:items-end"
+      data-motion-reveal
+    >
+      <div>
+        <p
+          class="text-sm font-semibold uppercase tracking-[0.26em] text-[#f4e8d0]/60"
+        >
+          {t.home.services.label}
+        </p>
+        <h2
+          class="mt-5 max-w-3xl text-4xl font-black leading-[0.96] tracking-[-0.06em] text-[#eee7da] md:text-6xl"
+        >
+          {t.home.services.title}
+        </h2>
+      </div>
+      <p
+        class="max-w-2xl text-xl leading-8 tracking-[-0.035em] text-white/65 md:justify-self-end"
+      >
+        {t.home.services.text}
+      </p>
+    </div>
+
+    <div class="mt-14 grid gap-4 md:grid-cols-3" data-motion-stagger>
+      {
+        t.home.services.items.map((item) => (
+          <article
+            class="rounded-[2rem] border border-white/10 bg-white/[0.035] p-7 transition duration-300 hover:-translate-y-1 hover:bg-white/[0.055]"
+            data-motion-item
+          >
+            <p class="text-3xl">{item.icon}</p>
+            <h3 class="mt-7 text-2xl font-black tracking-[-0.045em] text-[#f4e8d0]">
+              {item.title}
+            </h3>
+            <p class="mt-4 leading-7 text-white/64">{item.text}</p>
+          </article>
+        ))
+      }
+    </div>
+  </Container>
+</section>

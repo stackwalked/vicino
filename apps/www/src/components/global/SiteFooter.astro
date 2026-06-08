@@ -3,6 +3,7 @@ import Container from "../ui/Container.astro";
 import type { Locale } from "../../i18n/config";
 import { useTranslations } from "../../i18n";
 import { getNavigation } from "../../data/navigation";
+import { getLocalizedPath } from "../../data/site";
 
 const { locale } = Astro.props as { locale: Locale };
 const t = useTranslations(locale);
@@ -11,7 +12,7 @@ const footerNavigation = [...navigation.primary, ...navigation.secondary];
 ---
 
 <footer
-  id="contact"
+  id="contact-details"
   class="border-t border-white/10 bg-[#111113] py-14 text-white md:py-20"
 >
   <Container>
@@ -19,7 +20,7 @@ const footerNavigation = [...navigation.primary, ...navigation.secondary];
       class="grid gap-12 text-sm md:grid-cols-[1.5fr_0.9fr_0.9fr_0.9fr] md:gap-16"
     >
       <div>
-        <h2 class="text-sm font-semibold text-white/45">Contact Us</h2>
+        <h2 class="text-sm font-semibold text-white/60">{t.footer.contact}</h2>
         <ul class="mt-5 space-y-3 text-white/90">
           <li>
             <a class="transition hover:text-[#f4e8d0]" href="tel:+393475829146"
@@ -36,7 +37,7 @@ const footerNavigation = [...navigation.primary, ...navigation.secondary];
       </div>
 
       <nav aria-label="Footer navigation">
-        <h2 class="text-sm font-bold uppercase tracking-[0.08em] text-white/45">
+        <h2 class="text-sm font-bold uppercase tracking-[0.08em] text-white/60">
           Vicino
         </h2>
         <ul class="mt-5 space-y-3 text-white/90">
@@ -53,45 +54,58 @@ const footerNavigation = [...navigation.primary, ...navigation.secondary];
       </nav>
 
       <nav aria-label="Social links">
-        <h2 class="text-sm font-semibold text-white/45">Follow Us</h2>
+        <h2 class="text-sm font-semibold text-white/60">{t.footer.follow}</h2>
         <ul class="mt-5 space-y-3 text-white/90">
           <li>
             <a
               class="transition hover:text-[#f4e8d0]"
               href="https://www.instagram.com/"
               rel="noreferrer"
-              target="_blank">Instagram</a>
+              target="_blank">Instagram</a
+            >
           </li>
           <li>
             <a
               class="transition hover:text-[#f4e8d0]"
               href="https://www.facebook.com/"
               rel="noreferrer"
-              target="_blank">Facebook</a>
+              target="_blank">Facebook</a
+            >
           </li>
           <li>
             <a
               class="transition hover:text-[#f4e8d0]"
               href="https://www.tiktok.com/"
               rel="noreferrer"
-              target="_blank">TikTok</a>
+              target="_blank">TikTok</a
+            >
           </li>
         </ul>
       </nav>
 
       <nav aria-label="Legal links">
-        <h2 class="text-sm font-semibold text-white/45">Terms</h2>
+        <h2 class="text-sm font-semibold text-white/60">{t.footer.legal}</h2>
         <ul class="mt-5 space-y-3 text-white/90">
-          <li>
-            <a class="transition hover:text-[#f4e8d0]" href="#terms">Terms</a>
+          <li class="flex flex-wrap items-center gap-2">
+            <span>{t.footer.terms}</span>
+            <span
+              class="rounded-full bg-white/8 px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-[0.12em] text-white/45"
+              >{t.footer.comingSoon}</span
+            >
           </li>
-          <li>
-            <a class="transition hover:text-[#f4e8d0]" href="#privacy"
-              >Privacy Policy</a>
+          <li class="flex flex-wrap items-center gap-2">
+            <span>{t.footer.privacy}</span>
+            <span
+              class="rounded-full bg-white/8 px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-[0.12em] text-white/45"
+              >{t.footer.comingSoon}</span
+            >
           </li>
-          <li>
-            <a class="transition hover:text-[#f4e8d0]" href="#cookies"
-              >Cookie Policy</a>
+          <li class="flex flex-wrap items-center gap-2">
+            <span>{t.footer.cookies}</span>
+            <span
+              class="rounded-full bg-white/8 px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-[0.12em] text-white/45"
+              >{t.footer.comingSoon}</span
+            >
           </li>
         </ul>
       </nav>
@@ -99,7 +113,7 @@ const footerNavigation = [...navigation.primary, ...navigation.secondary];
 
     <a
       class="mx-auto mt-16 flex w-fit items-center justify-center gap-3 md:mt-20"
-      href={`/${locale}/`}
+      href={getLocalizedPath(locale)}
       aria-label="Vicino home"
     >
       <span

@@ -1,0 +1,104 @@
+---
+import { Image } from "astro:assets";
+import forkSpaghetti from "../../../assets/images/fork-spaghetti.png";
+import type { Locale } from "../../../i18n/config";
+import { useTranslations } from "../../../i18n";
+import Container from "../../ui/Container.astro";
+
+const { locale } = Astro.props as { locale: Locale };
+const t = useTranslations(locale);
+---
+
+<section
+  class="relative isolate overflow-hidden bg-[#0d0d0d] text-white"
+  aria-labelledby="home-hero-title"
+>
+  <div
+    class="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(244,232,208,0.14),transparent_30rem),radial-gradient(circle_at_80%_35%,rgba(181,86,53,0.18),transparent_26rem)]"
+  >
+  </div>
+  <div
+    class="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black/70 to-transparent"
+  >
+  </div>
+
+  <Container class="relative min-h-[820px] pt-44 md:min-h-screen md:pt-56">
+    <div
+      class="grid gap-16 lg:grid-cols-[minmax(0,0.98fr)_minmax(320px,0.72fr)] lg:items-center"
+    >
+      <div class="max-w-5xl">
+        <p
+          class="mb-7 text-sm font-semibold uppercase tracking-[0.26em] text-[#f4e8d0]/80"
+          data-motion-hero
+        >
+          {t.home.hero.eyebrow}
+        </p>
+        <h1
+          id="home-hero-title"
+          class="max-w-[930px] text-[clamp(3.55rem,7vw,7.15rem)] font-black leading-[0.94] tracking-[-0.075em] text-[#eee7da]"
+          data-motion-hero
+        >
+          {t.home.hero.title}
+        </h1>
+        <p
+          class="mt-9 max-w-[780px] text-[clamp(1.45rem,2.2vw,2.35rem)] font-medium leading-[1.16] tracking-[-0.052em] text-white/88"
+          data-motion-hero
+        >
+          {t.home.hero.intro}
+        </p>
+        <div
+          class="mt-11 flex flex-col gap-4 sm:flex-row sm:items-center"
+          data-motion-hero
+        >
+          <a
+            class="inline-flex w-fit rounded-full bg-[#f4e8d0] px-9 py-5 text-lg font-semibold tracking-[-0.035em] !text-[#111113] transition duration-300 hover:-translate-y-0.5 hover:bg-white hover:!text-[#111113]"
+            href="#contact-details"
+          >
+            {t.home.hero.primaryCta}
+          </a>
+          <a
+            class="inline-flex w-fit rounded-full border border-white/30 px-8 py-5 text-base font-semibold text-white/85 transition duration-300 hover:border-[#f4e8d0] hover:bg-[#f4e8d0] hover:!text-[#111113] focus-visible:bg-[#f4e8d0] focus-visible:!text-[#111113]"
+            href="#styles"
+          >
+            {t.home.hero.secondaryCta}
+          </a>
+        </div>
+        <p class="mt-4 text-sm font-medium text-[#f4e8d0]/72" data-motion-hero>
+          {t.home.hero.microcopy}
+        </p>
+      </div>
+
+      <div
+        class="relative mx-auto hidden min-h-[600px] w-full max-w-[480px] lg:block"
+        aria-hidden="true"
+      >
+        <div
+          class="absolute inset-x-6 top-6 h-[32rem] rounded-full bg-[#f4e8d0]/10 blur-3xl"
+        >
+        </div>
+        <div
+          class="absolute right-0 top-16 rounded-full border border-[#f4e8d0]/25 px-5 py-3 text-xs font-bold uppercase tracking-[0.22em] text-[#f4e8d0]/78 backdrop-blur"
+        >
+          Atmosphere first
+        </div>
+        <Image
+          class="relative mx-auto h-[590px] w-auto animate-float-slow object-contain drop-shadow-[0_44px_90px_rgba(0,0,0,0.78)]"
+          src={forkSpaghetti}
+          width={forkSpaghetti.width}
+          height={forkSpaghetti.height}
+          alt=""
+          loading="eager"
+          decoding="async"
+        />
+        <div
+          class="absolute bottom-14 left-1 rounded-[2rem] border border-white/12 bg-black/35 p-5 shadow-2xl backdrop-blur-md"
+        >
+          <p class="font-serif text-3xl italic text-[#f4e8d0]">local</p>
+          <p class="mt-1 max-w-[13rem] text-sm leading-5 text-white/72">
+            Marketing made to feel like the place, not the platform.
+          </p>
+        </div>
+      </div>
+    </div>
+  </Container>
+</section>
