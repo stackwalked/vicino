@@ -15,6 +15,7 @@ import gelatoAccent from "../../../assets/images/brand-worlds/gelato-accent.png"
 import type { Locale } from "../../../i18n/config";
 import { useTranslations } from "../../../i18n";
 import Container from "../../ui/Container.astro";
+import ArcDivider from "../../ui/ArcDivider.astro";
 
 const { locale } = Astro.props as { locale: Locale };
 const t = useTranslations(locale);
@@ -91,10 +92,11 @@ const worldsJson = JSON.stringify(
 
 <section
   id="styles"
-  class="brand-worlds relative overflow-clip bg-[#f4e8d0] text-black"
+  class="brand-worlds warm-island relative text-black"
   data-brand-worlds
   data-worlds={worldsJson}
 >
+  <ArcDivider position="top" fill="rgb(var(--color-paper))" />
   <div class="py-20 md:py-28">
     <Container>
       <div class="grid gap-8 md:grid-cols-[1fr_1fr] md:items-end">
@@ -119,43 +121,39 @@ const worldsJson = JSON.stringify(
     </Container>
   </div>
 
-  <div class="relative hidden h-[360vh] md:block">
-    <div class="pointer-events-none absolute inset-0" aria-hidden="true">
-      {
-        worlds.map((world, index) => (
-          <div
-            class="world-sentinel absolute inset-x-0 h-[90vh]"
-            style={`top: ${index * 90}vh`}
-            data-world={world.id}
-          />
-        ))
-      }
-    </div>
-
-    <div class="sticky top-0 h-screen">
+  <div class="relative hidden overflow-clip md:block" data-world-carousel>
+    <div
+      class="world-stage world-fine relative min-h-screen py-20 transition-colors duration-1000 md:flex md:items-center"
+      data-world-stage
+    >
       <div
-        class="world-stage world-fine relative min-h-screen py-20 transition-colors duration-1000 md:flex md:items-center"
-        data-world-stage
+        class="absolute inset-0 opacity-45 transition-opacity duration-700 world-pattern"
       >
+      </div>
+      <Container class="relative z-10 max-w-[1540px]">
         <div
-          class="absolute inset-0 opacity-45 transition-opacity duration-700 world-pattern"
+          class="grid gap-10 md:min-h-[calc(100svh-10rem)] md:grid-cols-[0.68fr_1.32fr] md:items-stretch xl:gap-14"
         >
-        </div>
-        <Container class="relative z-10 max-w-[1540px]">
           <div
-            class="grid gap-10 md:grid-cols-[0.68fr_1.32fr] md:items-center xl:gap-14"
+            class="flex h-full min-h-[640px] flex-col rounded-[2.4rem] border border-[rgb(var(--world-border))] bg-[rgb(var(--world-surface)/0.72)] p-7 shadow-2xl backdrop-blur-md md:p-9 xl:min-h-[720px] xl:p-10"
+            data-world-copy
           >
-            <div
-              class="rounded-[2.4rem] border border-[rgb(var(--world-border))] bg-[rgb(var(--world-surface)/0.72)] p-7 shadow-2xl backdrop-blur-md md:p-9 xl:p-10"
-              data-world-copy
-            >
-              <div class="flex items-center justify-between gap-5">
-                <p
-                  class="text-xs font-bold uppercase tracking-[0.24em] text-[rgb(var(--world-muted))]"
-                  data-world-label
+            <div class="flex items-center justify-between gap-5">
+              <p
+                class="text-xs font-bold uppercase tracking-[0.24em] text-[rgb(var(--world-muted))]"
+                data-world-label
+              >
+                {worlds[0].label}
+              </p>
+              <div class="flex items-center gap-3">
+                <button
+                  class="grid size-8 place-items-center rounded-full border border-[rgb(var(--world-border))] text-[rgb(var(--world-text))] transition hover:bg-[rgb(var(--world-text)/0.08)] focus-visible:outline-offset-4"
+                  type="button"
+                  data-world-prev
+                  aria-label={t.home.worlds.prevLabel}
                 >
-                  {worlds[0].label}
-                </p>
+                  <span aria-hidden="true">‹</span>
+                </button>
                 <div class="flex gap-2">
                   {
                     worlds.map((world, index) => (
@@ -174,108 +172,112 @@ const worldsJson = JSON.stringify(
                     ))
                   }
                 </div>
+                <button
+                  class="grid size-8 place-items-center rounded-full border border-[rgb(var(--world-border))] text-[rgb(var(--world-text))] transition hover:bg-[rgb(var(--world-text)/0.08)] focus-visible:outline-offset-4"
+                  type="button"
+                  data-world-next
+                  aria-label={t.home.worlds.nextLabel}
+                >
+                  <span aria-hidden="true">›</span>
+                </button>
               </div>
-              <p
-                class="mt-9 font-serif text-2xl italic text-[rgb(var(--world-accent))]"
-                data-world-theme
+            </div>
+            <p
+              class="mt-9 min-h-[2rem] font-serif text-2xl italic text-[rgb(var(--world-accent))]"
+              data-world-theme
+            >
+              {worlds[0].theme}
+            </p>
+            <h3
+              class="mt-4 min-h-[11.5rem] max-w-2xl text-4xl font-black leading-[0.96] tracking-[-0.06em] text-[rgb(var(--world-text))] lg:min-h-[13rem] lg:text-5xl xl:min-h-[14.5rem] xl:text-6xl"
+              data-world-headline
+            >
+              {worlds[0].headline}
+            </h3>
+            <p
+              class="mt-6 min-h-[8rem] max-w-xl text-lg leading-8 tracking-[-0.03em] text-[rgb(var(--world-muted))]"
+              data-world-description
+            >
+              {worlds[0].description}
+            </p>
+            <div
+              class="mt-auto min-h-[6.5rem] rounded-3xl border border-[rgb(var(--world-border))] bg-[rgb(var(--world-text)/0.06)] p-5 text-sm font-semibold leading-6 text-[rgb(var(--world-text))]"
+              data-world-takeaway
+            >
+              {worlds[0].takeaway}
+            </div>
+          </div>
+
+          <div
+            class="relative h-full min-h-[640px] overflow-hidden rounded-[3.25rem] border border-[rgb(var(--world-border))] bg-[rgb(var(--world-surface)/0.8)] p-6 shadow-2xl backdrop-blur-md lg:p-8 xl:min-h-[720px] xl:p-10"
+            data-world-media
+          >
+            <Image
+              class="world-photo"
+              src={worlds[0].photoAsset}
+              alt=""
+              width={1200}
+              format="webp"
+              loading="lazy"
+              decoding="async"
+              data-world-photo
+            />
+            <div class="world-photo-scrim"></div>
+            <div
+              class="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-[rgb(var(--world-accent)/0.25)] blur-3xl"
+            >
+            </div>
+            <div
+              class="relative z-10 flex items-center justify-between border-b border-[rgb(var(--world-border))] pb-5 text-[rgb(var(--world-muted))]"
+            >
+              <span
+                class="text-xs font-bold uppercase tracking-[0.22em]"
+                data-world-type>{worlds[0].businessType}</span
               >
-                {worlds[0].theme}
-              </p>
-              <h3
-                class="mt-4 max-w-2xl text-4xl font-black leading-[0.96] tracking-[-0.06em] text-[rgb(var(--world-text))] lg:text-5xl xl:text-6xl"
-                data-world-headline
+              <span
+                class="rounded-full border border-[rgb(var(--world-border))] px-4 py-2 text-xs font-semibold"
+                >vicino study</span
               >
-                {worlds[0].headline}
-              </h3>
-              <p
-                class="mt-6 max-w-xl text-lg leading-8 tracking-[-0.03em] text-[rgb(var(--world-muted))]"
-                data-world-description
-              >
-                {worlds[0].description}
-              </p>
-              <div
-                class="mt-8 rounded-3xl border border-[rgb(var(--world-border))] bg-[rgb(var(--world-text)/0.06)] p-5 text-sm font-semibold leading-6 text-[rgb(var(--world-text))]"
-                data-world-takeaway
-              >
-                {worlds[0].takeaway}
-              </div>
             </div>
 
             <div
-              class="relative min-h-[580px] overflow-hidden rounded-[3.25rem] border border-[rgb(var(--world-border))] bg-[rgb(var(--world-surface)/0.8)] p-6 shadow-2xl backdrop-blur-md lg:p-8 xl:min-h-[680px] xl:p-10"
-              data-world-media
+              class="world-visual relative z-10 mt-8 h-[470px] xl:h-[560px]"
+              data-world-visual
             >
-              <Image
-                class="world-photo"
-                src={worlds[0].photoAsset}
-                alt=""
-                width={1200}
-                format="webp"
-                loading="lazy"
-                decoding="async"
-                data-world-photo
-              />
-              <div class="world-photo-scrim"></div>
-              <div
-                class="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-[rgb(var(--world-accent)/0.25)] blur-3xl"
-              >
-              </div>
-              <div
-                class="relative z-10 flex items-center justify-between border-b border-[rgb(var(--world-border))] pb-5 text-[rgb(var(--world-muted))]"
-              >
-                <span
-                  class="text-xs font-bold uppercase tracking-[0.22em]"
-                  data-world-type>{worlds[0].businessType}</span
-                >
-                <span
-                  class="rounded-full border border-[rgb(var(--world-border))] px-4 py-2 text-xs font-semibold"
-                  >vicino study</span
-                >
-              </div>
-
-              <div
-                class="world-visual relative z-10 mt-8 min-h-[470px] xl:min-h-[560px]"
-                data-world-visual
-              >
-                <div
-                  class="world-browser"
-                  aria-hidden="true"
-                  data-world-browser
-                >
-                  <div class="world-browser-bar">
-                    <span></span><span></span><span></span>
-                    <p>vicino.com</p>
-                    <strong data-world-browser-label
-                      >{worlds[0].businessType}</strong
-                    >
-                  </div>
-                  <Image
-                    src={worlds[0].demoAsset}
-                    alt=""
-                    width={1200}
-                    format="webp"
-                    loading="lazy"
-                    decoding="async"
-                    data-world-demo
-                  />
+              <div class="world-browser" aria-hidden="true" data-world-browser>
+                <div class="world-browser-bar">
+                  <span></span><span></span><span></span>
+                  <p>vicino.com</p>
+                  <strong data-world-browser-label
+                    >{worlds[0].businessType}</strong
+                  >
                 </div>
                 <Image
-                  class="world-accent-img"
-                  src={worlds[0].accentAsset}
+                  src={worlds[0].demoAsset}
                   alt=""
-                  width={360}
+                  width={1200}
                   format="webp"
                   loading="lazy"
                   decoding="async"
-                  data-world-accent
+                  data-world-demo
                 />
-                <div class="world-orbit one"></div>
-                <div class="world-orbit two"></div>
               </div>
+              <Image
+                class="world-accent-img"
+                src={worlds[0].accentAsset}
+                alt=""
+                width={360}
+                format="webp"
+                loading="lazy"
+                decoding="async"
+                data-world-accent
+              />
+              <div class="world-orbit one"></div>
+              <div class="world-orbit two"></div>
             </div>
           </div>
-        </Container>
-      </div>
+        </div>
+      </Container>
     </div>
   </div>
 
@@ -345,7 +347,6 @@ const worldsJson = JSON.stringify(
       accent: stage.querySelector("[data-world-accent]"),
     };
     const buttons = [...stage.querySelectorAll("[data-world-button]")];
-    const sentinels = [...root.querySelectorAll("[data-world]")];
     const worldClasses = worlds.map((item) => `world-${item.palette}`);
     let activeWorldId = worlds[0]?.id;
     let isTransitioning = false;
@@ -363,6 +364,8 @@ const worldsJson = JSON.stringify(
         src &&
         target.getAttribute("src") !== src
       ) {
+        target.removeAttribute("srcset");
+        target.removeAttribute("sizes");
         target.src = src;
       }
     }
@@ -599,22 +602,86 @@ const worldsJson = JSON.stringify(
       }, 980);
     }
 
+    const carousel = root.querySelector("[data-world-carousel]");
+    const AUTOPLAY_MS = 6000;
+    let autoplayTimer = null;
+    let inView = false;
+
+    function indexOfActive() {
+      const index = worlds.findIndex((item) => item.id === activeWorldId);
+      return index === -1 ? 0 : index;
+    }
+
+    function goTo(index) {
+      const target = worlds[(index + worlds.length) % worlds.length];
+      if (target) setWorld(target.id);
+    }
+
+    function stopAutoplay() {
+      if (autoplayTimer !== null) {
+        window.clearInterval(autoplayTimer);
+        autoplayTimer = null;
+      }
+    }
+
+    function startAutoplay() {
+      if (!motionSafe || !inView || autoplayTimer !== null) return;
+      autoplayTimer = window.setInterval(
+        () => goTo(indexOfActive() + 1),
+        AUTOPLAY_MS,
+      );
+    }
+
+    function restartAutoplay() {
+      stopAutoplay();
+      startAutoplay();
+    }
+
     buttons.forEach((button) =>
-      button.addEventListener("click", () =>
-        setWorld(button.dataset.worldButton),
-      ),
+      button.addEventListener("click", () => {
+        setWorld(button.dataset.worldButton);
+        restartAutoplay();
+      }),
     );
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible) setWorld(visible.target.dataset.world);
-      },
-      { threshold: [0.35, 0.55, 0.75], rootMargin: "-18% 0px -18% 0px" },
-    );
+    root.querySelector("[data-world-prev]")?.addEventListener("click", () => {
+      goTo(indexOfActive() - 1);
+      restartAutoplay();
+    });
 
-    sentinels.forEach((sentinel) => observer.observe(sentinel));
+    root.querySelector("[data-world-next]")?.addEventListener("click", () => {
+      goTo(indexOfActive() + 1);
+      restartAutoplay();
+    });
+
+    if (carousel instanceof HTMLElement) {
+      carousel.addEventListener("keydown", (event) => {
+        if (event.key === "ArrowLeft") {
+          event.preventDefault();
+          goTo(indexOfActive() - 1);
+          restartAutoplay();
+        } else if (event.key === "ArrowRight") {
+          event.preventDefault();
+          goTo(indexOfActive() + 1);
+          restartAutoplay();
+        }
+      });
+
+      carousel.addEventListener("mouseenter", stopAutoplay);
+      carousel.addEventListener("mouseleave", startAutoplay);
+      carousel.addEventListener("focusin", stopAutoplay);
+      carousel.addEventListener("focusout", startAutoplay);
+
+      const viewObserver = new IntersectionObserver(
+        (entries) => {
+          inView = entries[0]?.isIntersecting ?? false;
+          if (inView) startAutoplay();
+          else stopAutoplay();
+        },
+        { threshold: 0.4 },
+      );
+
+      viewObserver.observe(carousel);
+    }
   }
 </script>

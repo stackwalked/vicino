@@ -7,36 +7,74 @@ const { locale } = Astro.props as { locale: Locale };
 const t = useTranslations(locale);
 ---
 
-<section id="process" class="bg-[#f8efe0] py-20 text-black md:py-32">
-  <Container>
-    <div class="grid gap-8 md:grid-cols-[0.72fr_1.28fr]">
-      <div data-motion-reveal>
+<section
+  id="process"
+  class="relative overflow-hidden py-20 text-white md:py-32"
+>
+
+  <Container class="relative">
+    <div
+      class="grid gap-8 lg:grid-cols-[minmax(0,0.95fr)_auto] lg:items-end"
+      data-motion-reveal
+    >
+      <div>
         <p
-          class="text-sm font-semibold uppercase tracking-[0.26em] text-black/48"
+          class="text-sm font-semibold uppercase tracking-[0.26em] text-[#f4e8d0]/54"
         >
           {t.home.process.label}
         </p>
         <h2
-          class="mt-5 text-4xl font-black leading-none tracking-[-0.06em] md:text-6xl"
+          class="mt-5 max-w-4xl text-4xl font-black leading-[0.94] tracking-[-0.065em] md:text-6xl"
         >
           {t.home.process.title}
         </h2>
       </div>
-      <div class="grid gap-4" data-motion-stagger>
+      <div
+        class="flex w-fit items-center gap-3 rounded-full border border-[#f4e8d0]/14 bg-[#f4e8d0]/8 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-[#f4e8d0]/62 shadow-[0_20px_70px_rgb(0_0_0/0.22)] backdrop-blur lg:justify-self-end"
+        aria-hidden="true"
+      >
+        <span class="size-2 rounded-full bg-[#b55635]"></span>
+        01 — 04
+      </div>
+    </div>
+
+    <div class="relative mt-14 md:mt-20" data-motion-stagger>
+      <div
+        class="absolute bottom-8 left-6 top-8 w-px bg-gradient-to-b from-[#f4e8d0]/0 via-[#f4e8d0]/38 to-[#b55635]/0 md:bottom-auto md:left-10 md:right-10 md:top-[3.35rem] md:h-px md:w-auto md:bg-gradient-to-r"
+        aria-hidden="true"
+      >
+      </div>
+
+      <div class="grid gap-6 md:grid-cols-4 md:gap-4 xl:gap-6">
         {
           t.home.process.items.map((item, index) => (
             <article
-              class="grid gap-5 rounded-[2rem] border border-black/10 bg-white/55 p-6 shadow-[0_24px_80px_rgb(24_24_22/0.08)] backdrop-blur md:grid-cols-[auto_1fr] md:p-8"
+              class:list={[
+                "group relative ml-14 rounded-[2rem] border border-[#f4e8d0]/14 bg-[#f4e8d0]/[0.075] p-5 pt-6 shadow-[0_28px_90px_rgb(0_0_0/0.22)] backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-[#f4e8d0]/28 hover:bg-[#f4e8d0]/[0.105] md:ml-0 md:min-h-[22rem] md:p-6 md:pt-28 xl:p-7 xl:pt-28",
+                index % 2 === 1 ? "md:mt-16" : "md:mt-0",
+              ]}
               data-motion-item
             >
-              <span class="grid size-12 place-items-center rounded-full bg-black text-sm font-bold text-[#f4e8d0]">
+              <span
+                class="absolute left-0 top-6 grid size-12 -translate-x-[calc(100%+0.5rem)] place-items-center rounded-full border border-[#f4e8d0]/18 bg-[#171512] text-sm font-black text-[#f4e8d0] shadow-[0_0_0_8px_rgb(244_232_208/0.06),0_18px_45px_rgb(0_0_0/0.32)] transition group-hover:scale-105 group-hover:bg-[#b55635] md:left-1/2 md:top-7 md:-translate-x-1/2"
+              >
                 0{index + 1}
               </span>
+
+              <div
+                class="absolute left-0 top-12 hidden h-7 w-px -translate-y-full bg-[#f4e8d0]/22 md:left-1/2 md:block"
+                aria-hidden="true"
+              >
+              </div>
+
               <div>
-                <h3 class="text-2xl font-black tracking-[-0.045em]">
+                <p class="text-xs font-bold uppercase tracking-[0.2em] text-[#f4e8d0]/42">
+                  0{index + 1} / 04
+                </p>
+                <h3 class="mt-4 text-2xl font-black leading-none tracking-[-0.05em] text-[#fff8ea] md:text-[1.65rem] xl:text-3xl">
                   {item.title}
                 </h3>
-                <p class="mt-2 max-w-2xl leading-7 text-black/62">
+                <p class="mt-4 leading-7 text-[#f4e8d0]/64 md:text-sm md:leading-6 xl:text-base xl:leading-7">
                   {item.text}
                 </p>
               </div>

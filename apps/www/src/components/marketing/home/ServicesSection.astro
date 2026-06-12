@@ -7,7 +7,7 @@ const { locale } = Astro.props as { locale: Locale };
 const t = useTranslations(locale);
 ---
 
-<section id="services" class="bg-[#0d0d0d] py-20 text-white md:py-32">
+<section id="services" class="py-20 text-white md:py-32">
   <Container>
     <div
       class="grid gap-10 md:grid-cols-[0.9fr_1.1fr] md:items-end"
@@ -44,6 +44,13 @@ const t = useTranslations(locale);
               {item.title}
             </h3>
             <p class="mt-4 leading-7 text-white/64">{item.text}</p>
+            <ul class="mt-7 flex flex-wrap gap-2">
+              {item.details.map((detail) => (
+                <li class="rounded-full border border-[#f4e8d0]/16 bg-[#f4e8d0]/8 px-3 py-1.5 text-xs font-bold uppercase tracking-[0.12em] text-[#f4e8d0]/70">
+                  {detail}
+                </li>
+              ))}
+            </ul>
           </article>
         ))
       }

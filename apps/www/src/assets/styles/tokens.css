@@ -15,6 +15,9 @@
   --color-accent-strong: 126 48 33;
   --color-olive: 83 95 65;
 
+  --bg-ink: 12 11 10;
+  --bg-warm: 244 232 208;
+
   --shadow-soft: 0 24px 80px rgb(24 24 22 / 0.12);
   --radius-sm: 0.75rem;
   --radius-md: 1.25rem;

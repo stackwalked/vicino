@@ -1,0 +1,72 @@
+---
+import type { Locale } from "../../../i18n/config";
+import { useTranslations } from "../../../i18n";
+import Container from "../../ui/Container.astro";
+
+const { locale } = Astro.props as { locale: Locale };
+const t = useTranslations(locale);
+
+const { label, title, logos, testimonials } = t.home.socialProof;
+
+// Duplicated once so the marquee loops seamlessly (track shifts by -50%).
+const logoLoop = [...logos, ...logos];
+const testimonialLoop = [...testimonials, ...testimonials];
+---
+
+<section
+  class="relative overflow-hidden py-20 text-white md:py-28"
+  aria-labelledby="social-proof-title"
+>
+
+  <Container class="relative">
+    <div class="text-center" data-motion-reveal>
+      <p
+        class="text-sm font-semibold uppercase tracking-[0.26em] text-[#f4e8d0]/60"
+      >
+        {label}
+      </p>
+      <h2
+        id="social-proof-title"
+        class="mx-auto mt-6 max-w-3xl text-3xl font-black leading-[0.98] tracking-[-0.055em] text-[#eee7da] md:text-5xl"
+      >
+        {title}
+      </h2>
+    </div>
+  </Container>
+
+  <div class="marquee relative mt-14">
+    <div class="marquee-track items-center gap-12 pr-12">
+      {
+        logoLoop.map((logo, index) => (
+          <span
+            class="whitespace-nowrap font-serif text-2xl italic text-white/45 md:text-3xl"
+            aria-hidden={index >= logos.length ? "true" : undefined}
+          >
+            {logo}
+          </span>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="marquee relative mt-8">
+    <div class="marquee-track is-reverse gap-5 pr-5">
+      {
+        testimonialLoop.map((item, index) => (
+          <figure
+            class="w-[20rem] shrink-0 rounded-[1.6rem] border border-white/10 bg-white/[0.035] p-6 md:w-[24rem]"
+            aria-hidden={index >= testimonials.length ? "true" : undefined}
+          >
+            <blockquote class="text-base leading-7 text-white/82">
+              “{item.quote}”
+            </blockquote>
+            <figcaption class="mt-5 text-sm">
+              <span class="font-bold text-[#f4e8d0]">{item.author}</span>
+              <span class="text-white/50"> — {item.role}</span>
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+</section>

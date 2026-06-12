@@ -3,6 +3,7 @@ import Container from "../ui/Container.astro";
 import { localeLabels, locales, type Locale } from "../../i18n/config";
 import { useTranslations } from "../../i18n";
 import { getNavigation } from "../../data/navigation";
+import { contact } from "../../data/contact";
 import { getLocalizedPath } from "../../data/site";
 
 const { locale } = Astro.props as { locale: Locale };
@@ -10,7 +11,7 @@ const t = useTranslations(locale);
 const navigation = getNavigation(locale);
 ---
 
-<header class="absolute inset-x-0 top-0 z-20 py-8 text-white">
+<header class="fixed inset-x-0 top-0 z-20 py-4 text-white transition-all duration-500 ease-in-out" id="site-header">
   <Container>
     <div class="grid items-center gap-6 lg:grid-cols-[1fr_auto_1fr]">
       <nav
@@ -29,14 +30,14 @@ const navigation = getNavigation(locale);
       <a
         class="flex items-center justify-center gap-3 justify-self-start lg:justify-self-center"
         href={getLocalizedPath(locale)}
-        aria-label="Vicino home"
+        aria-label="VICINO home"
       >
         <span
-          class="grid size-9 place-items-center rounded-full border border-white/90 text-[17px] leading-none"
+          class="grid size-8 place-items-center rounded-full border border-white/90 text-[15px] leading-none"
           >🍴</span
         >
         <span
-          class="text-5xl font-black lowercase leading-none tracking-[-0.08em] md:text-6xl"
+          class="text-3xl font-black lowercase leading-none tracking-[-0.08em]"
           >vicino</span
         >
       </a>
@@ -81,8 +82,10 @@ const navigation = getNavigation(locale);
         </div>
 
         <a
-          class="hidden rounded-full border border-[#f4e8d0] px-9 py-3.5 text-sm font-semibold text-[#f4e8d0] transition hover:bg-[#f4e8d0] hover:!text-[#111113] focus-visible:bg-[#f4e8d0] focus-visible:!text-[#111113] md:inline-flex"
-          href={`${getLocalizedPath(locale)}#contact-details`}
+          class="hidden rounded-full border border-[#f4e8d0] px-5 py-2 text-sm font-semibold text-[#f4e8d0] transition hover:bg-[#f4e8d0] hover:!text-[#111113] focus-visible:bg-[#f4e8d0] focus-visible:!text-[#111113] md:inline-flex whitespace-nowrap"
+          href={contact.whatsappUrl}
+          rel="noreferrer"
+          target="_blank"
         >
           {t.nav.createPreview}
         </a>
@@ -90,3 +93,26 @@ const navigation = getNavigation(locale);
     </div>
   </Container>
 </header>
+
+<script>
+  const header = document.getElementById("site-header");
+  const threshold = window.innerHeight * 2.5;
+
+  const hideZone = window.innerHeight * 0.3;
+
+  function update() {
+    if (window.scrollY > threshold) {
+      header?.classList.remove("-translate-y-full");
+      header?.classList.add("bg-[#111113]/80", "backdrop-blur-md", "border-b", "border-white/8");
+    } else if (window.scrollY > hideZone) {
+      header?.classList.add("-translate-y-full");
+      header?.classList.remove("bg-[#111113]/80", "backdrop-blur-md", "border-b", "border-white/8");
+    } else {
+      header?.classList.remove("-translate-y-full");
+      header?.classList.remove("bg-[#111113]/80", "backdrop-blur-md", "border-b", "border-white/8");
+    }
+  }
+
+  window.addEventListener("scroll", update, { passive: true });
+  update();
+</script>

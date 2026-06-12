@@ -14,51 +14,106 @@ export const it = {
       eyebrow: "Siti e marketing per ristoranti locali",
       title: "Molti ospiti scelgono il tuo ristorante prima ancora di entrare.",
       intro:
-        "Prima ti cercano online — foto, menu, recensioni, orari. Vicino crea siti curati che trasformano quel primo sguardo in una prenotazione, una visita o una richiesta.",
+        "Prima ti cercano online — foto, menu, recensioni, orari. VICINO crea siti curati che trasformano quel primo sguardo in una prenotazione, una visita o una richiesta.",
       primaryCta: "Parliamone",
       secondaryCta: "Guarda gli studi di stile",
       microcopy:
         "Anteprima prezzi più sotto — pacchetti chiari, niente preventivi misteriosi.",
     },
     concept: {
-      label: "01 / Perché conta",
-      kicker: "Ogni stile, ogni tipo di ristorante. Costruito attorno al tuo.",
-      title: "Quando un ospite arriva alla porta, spesso ha già scelto.",
-      text: "La scelta è successa prima, sul telefono — foto, menu, recensioni, accanto ad altri due locali. Se sei difficile da trovare o sembri fermo nel tempo, perdi quell’ospite prima ancora che assaggi la cucina.",
-      cta: "Guarda cosa potrebbe diventare il tuo →",
-      microcopy:
-        "Lo stesso sistema, ristoranti diversi. Il prossimo può essere il tuo.",
-      benefitsLabel: "Perché gli ospiti scelgono prima di arrivare",
-      benefits: [
+      label: "01 / Il momento sul telefono",
+      title:
+        "Il tuo ristorante viene giudicato sul telefono prima che al tavolo.",
+      text: "Di solito un ospite non legge tutto. Controlla in fretta: atmosfera, menu, orari, posizione e quanto è facile prenotare o scriverti.",
+      cta: "Guarda gli studi di stile →",
+      microcopy: "L’obiettivo è semplice: rendere ovvio il prossimo passo.",
+      stats: [
+        { value: 73, suffix: "%", label: "ti cerca online prima di scegliere dove mangiare" },
+        { value: 88, suffix: "%", label: "giudica la credibilità del locale prima sul telefono" },
+        { value: 2, suffix: "×", label: "più voglia di prenotare con un sito chiaro e veloce" },
+      ],
+      checks: [
         {
-          label: "Trovato su Google",
-          detail:
-            "Gli ospiti cercano zona e cucina prima di scegliere. Il sito aiuta a trovarti prima.",
+          title: "Trovato subito",
+          text: "Posizione, orari e pagine facili da trovare aiutano gli ospiti a sceglierti prima di passare oltre.",
         },
         {
-          label: "Più margine",
-          detail:
-            "Prenotazioni e richieste dirette riducono la dipendenza da piattaforme con commissioni alte.",
+          title: "Sembra aggiornato",
+          text: "Visual curati fanno percepire il locale vivo, seguito e meritevole di una visita.",
         },
         {
-          label: "Tavoli importanti",
-          detail:
-            "Occasioni speciali e gruppi scelgono locali che sembrano pronti ad accoglierli.",
+          title: "Risponde alle domande",
+          text: "Menu, foto, indicazioni e contatti si trovano velocemente senza cercare troppo.",
         },
         {
-          label: "Sempre aggiornato",
-          detail:
-            "Orari, menu, telefono e link restano sotto controllo in un posto affidabile.",
+          title: "Trasforma interesse in azione",
+          text: "Link chiari a WhatsApp, prenotazione o richiesta evitano che l’interesse si perda.",
+        },
+      ],
+      floaters: [
+        "Posso vedere il menu?",
+        "È aperto stasera?",
+        "Posso scrivergli ora?",
+      ],
+      phone: {
+        ariaLabel:
+          "Illustrazione di un ospite che confronta un ristorante sul telefono",
+        searchLabel: "Ricerca ospite",
+        query: "cena vicino a me stasera",
+        resultLabel: "Anteprima risultato",
+        name: "Il tuo ristorante",
+        rating: "4.8",
+        description:
+          "Atmosfera chiara, menu aggiornato, orari visibili e un modo diretto per prenotare o fare una domanda.",
+        previewCards: [
+          { icon: "◒", label: "Mood" },
+          { icon: "≋", label: "Menu" },
+          { icon: "↗", label: "Prenota" },
+        ],
+        facts: [
+          { label: "Aperto", value: "Stasera" },
+          { label: "Menu", value: "Aggiornato" },
+          { label: "Contatto", value: "WhatsApp" },
+        ],
+        primaryAction: "Vedi prezzi",
+        secondaryAction: "Vedi stili",
+      },
+    },
+    socialProof: {
+      label: "Scelti dai locali",
+      title: "Ristoranti che volevano essere scelti — non solo scrollati.",
+      logos: [
+        "Trattoria Lina",
+        "Bar Centrale",
+        "Gelateria Sole",
+        "Kebab 24",
+        "Osteria Vicina",
+        "Caffè Mattino",
+      ],
+      testimonials: [
+        {
+          quote:
+            "Gli ospiti hanno iniziato a dire che prenotavano perché il sito sembrava proprio il locale.",
+          author: "Marco",
+          role: "Titolare trattoria",
         },
         {
-          label: "Meno telefonate",
-          detail:
-            "Percorsi chiari per prenotare e chiedere informazioni riducono le chiamate perse durante il servizio.",
+          quote:
+            "Finalmente sembriamo aperti, aggiornati e facili da raggiungere. Più prenotazioni dal telefono.",
+          author: "Giulia",
+          role: "Responsabile caffè",
         },
         {
-          label: "Più autorevole",
-          detail:
-            "Un sito curato fa percepire il locale forte quanto l’esperienza che offre.",
+          quote:
+            "Menu chiaro e veloce e un pulsante per scrivere al volo. Esatto per la pausa pranzo.",
+          author: "Ahmet",
+          role: "Street food",
+        },
+        {
+          quote:
+            "Sembra nostro, non un template. La gente ricorda i gusti e il sito.",
+          author: "Sara",
+          role: "Gelateria",
         },
       ],
     },
@@ -68,6 +123,8 @@ export const it = {
         "Non template. Mondi di brand che mostrano cosa può diventare il tuo ristorante online.",
       text: "Queste direzioni immaginarie mostrano come lo stesso metodo possa cambiare da elegante a familiare, veloce o giocoso — senza far sembrare tutti i ristoranti uguali.",
       switchLabel: "Mostra studio di stile",
+      prevLabel: "Studio di stile precedente",
+      nextLabel: "Studio di stile successivo",
       staticLabel: "Build statico",
       items: [
         {
@@ -145,22 +202,35 @@ export const it = {
     services: {
       label: "03 / Offerta",
       title: "I dettagli digitali che aiutano le persone a sceglierti.",
-      text: "Vicino unisce design del sito, atmosfera di brand, visibilità locale e supporto al lancio in un percorso chiaro per ristoranti.",
+      text: "VICINO unisce design del sito, atmosfera di brand, visibilità locale e supporto al lancio in un percorso chiaro per ristoranti.",
       items: [
         {
           icon: "✦",
           title: "Design e sviluppo sito",
           text: "Siti Astro veloci e responsive, con layout mobile e struttura multilingua inclusi dall’inizio.",
+          details: [
+            "Mobile-first",
+            "Build statico",
+            "Percorso contatto",
+            "Lancio rapido",
+          ],
         },
         {
           icon: "◐",
           title: "Atmosfera di brand",
           text: "Direzione visiva, tono, colori, tipografia e sistemi di layout che sembrano su misura, non generici.",
+          details: [
+            "Direzione mood",
+            "Sistema type",
+            "Token colore",
+            "Ritmo sezioni",
+          ],
         },
         {
           icon: "⌖",
           title: "Visibilità locale",
           text: "Struttura SEO-friendly, metadata localizzati, base analytics e informazioni pronte per Google.",
+          details: ["SEO locale", "Schema base", "Analytics", "Google-ready"],
         },
       ],
     },
@@ -179,6 +249,30 @@ export const it = {
       sendPlan: "Parliamone",
       modulesLabel: "Moduli",
       addonsLabel: "Extra",
+      presetsLabel: "Punti di partenza tipici",
+      presets: [
+        {
+          title: "Starter caffè",
+          text: "Una prima versione chiara per locali di quartiere che hanno bisogno di orari, menu e fiducia nella ricerca locale.",
+          price: 1330,
+          items: ["Foundation", "Menu digitale", "Fatti trovare"],
+          optionIds: ["digital-menu", "get-found"],
+        },
+        {
+          title: "Ristorante premium",
+          text: "Una rotta curata per ristoranti dove atmosfera, prenotazione e presentazione contano di più.",
+          price: 1590,
+          items: ["Foundation", "Design premium", "Prenotazioni"],
+          optionIds: ["design-animation", "reservations"],
+        },
+        {
+          title: "Presenza locale completa",
+          text: "Un pacchetto più ampio per ristoranti che vogliono struttura, visibilità, foto e spazio per crescere.",
+          price: 1740,
+          items: ["Foundation", "Sito completo", "Fatti trovare", "Gallery"],
+          optionIds: ["site-structure", "get-found", "gallery-reviews"],
+        },
+      ],
       base: {
         title: "Foundation",
         price: 690,
@@ -347,8 +441,8 @@ export const it = {
     comingSoon: "In arrivo",
   },
   seo: {
-    title: "Vicino — Siti premium per ristoranti e caffè",
+    title: "VICINO — Siti premium per ristoranti e caffè",
     description:
-      "Vicino crea siti curati e identità digitali per ristoranti, caffè, bar, gelaterie e street-food spot che vogliono distinguersi online.",
+      "VICINO crea siti curati e identità digitali per ristoranti, caffè, bar, gelaterie e street-food spot che vogliono distinguersi online.",
   },
 };

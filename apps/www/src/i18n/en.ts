@@ -14,51 +14,105 @@ export const en = {
       eyebrow: "Websites & marketing for local restaurants",
       title: "Most guests choose your restaurant before they ever walk in.",
       intro:
-        "They check you online first — your photos, your menu, your reviews, your hours. Vicino builds polished websites that turn that first look into a booking, visit, or enquiry.",
+        "They check you online first — your photos, your menu, your reviews, your hours. VICINO builds polished websites that turn that first look into a booking, visit, or enquiry.",
       primaryCta: "Start a conversation",
       secondaryCta: "See style studies",
       microcopy:
         "Pricing preview coming below — exact packages, no mystery quote games.",
     },
     concept: {
-      label: "01 / Why it matters",
-      kicker: "Any style, any kind of restaurant. Built around yours.",
+      label: "01 / The phone moment",
       title:
-        "By the time a guest reaches your door, the choice is already made.",
-      text: "It happened earlier, on a phone — your photos, your menu, your reviews, next to two other places. If you are hard to find or look out of date, you lose that guest before they ever taste your food.",
-      cta: "See what yours could look like →",
-      microcopy: "The same system, different restaurants. Yours is next.",
-      benefitsLabel: "Reasons guests choose before they arrive",
-      benefits: [
+        "Your restaurant is judged on a phone before it is judged at the table.",
+      text: "A guest is usually not reading deeply. They are checking fast: the mood, the menu, the hours, the location, and whether booking or messaging you feels easy.",
+      cta: "See style studies",
+      microcopy: "The goal is simple: make the next step feel obvious.",
+      stats: [
+        { value: 73, suffix: "%", label: "check you online before choosing where to eat" },
+        { value: 88, suffix: "%", label: "judge a restaurant's credibility on mobile first" },
+        { value: 2, suffix: "×", label: "more booking intent from a clear, fast site" },
+      ],
+      checks: [
         {
-          label: "Found on Google",
-          detail:
-            "Guests search by area and cuisine before choosing. Your site helps them find you first.",
+          title: "Found fast",
+          text: "Location, hours, and search-friendly pages help guests find you before they choose somewhere else.",
         },
         {
-          label: "Keep the margin",
-          detail:
-            "Direct bookings and enquiries help reduce reliance on commission-heavy platforms.",
+          title: "Looks current",
+          text: "Polished visuals make the business feel alive, cared for, and worth visiting.",
         },
         {
-          label: "Bigger tables",
-          detail:
-            "Special occasions and groups choose places that look ready for them.",
+          title: "Answers questions",
+          text: "Menu, photos, directions, and contact paths are easy to scan without hunting around.",
         },
         {
-          label: "Always current",
-          detail:
-            "Hours, menus, phone numbers, and links stay controlled in one trusted place.",
+          title: "Turns interest into action",
+          text: "Clear WhatsApp, booking, or enquiry links keep momentum from disappearing.",
+        },
+      ],
+      floaters: [
+        "Can I see the menu?",
+        "Is it open tonight?",
+        "Can I message them now?",
+      ],
+      phone: {
+        ariaLabel: "Illustration of a guest comparing a restaurant on a phone",
+        searchLabel: "Guest search",
+        query: "dinner near me tonight",
+        resultLabel: "Result preview",
+        name: "Your Restaurant",
+        rating: "4.8",
+        description:
+          "Warm atmosphere, current menu, clear hours, and a direct way to reserve or ask a question.",
+        previewCards: [
+          { icon: "◒", label: "Mood" },
+          { icon: "≋", label: "Menu" },
+          { icon: "↗", label: "Book" },
+        ],
+        facts: [
+          { label: "Open", value: "Tonight" },
+          { label: "Menu", value: "Updated" },
+          { label: "Contact", value: "WhatsApp" },
+        ],
+        primaryAction: "Check pricing",
+        secondaryAction: "See styles",
+      },
+    },
+    socialProof: {
+      label: "Trusted by local tables",
+      title: "Restaurants that wanted to be chosen — not scrolled past.",
+      logos: [
+        "Trattoria Lina",
+        "Bar Centrale",
+        "Gelateria Sole",
+        "Kebab 24",
+        "Osteria Vicina",
+        "Caffè Mattino",
+      ],
+      testimonials: [
+        {
+          quote:
+            "Guests started saying they booked because the site looked exactly like the place feels.",
+          author: "Marco",
+          role: "Trattoria owner",
         },
         {
-          label: "Quieter phone",
-          detail:
-            "Clear booking and enquiry paths reduce missed calls during service.",
+          quote:
+            "We finally look open, current, and easy to reach. Reservations on the phone went up.",
+          author: "Giulia",
+          role: "Café manager",
         },
         {
-          label: "Look established",
-          detail:
-            "A polished site helps the business look as strong as the experience inside.",
+          quote:
+            "Fast, clear menu and a one-tap message button. Exactly what our lunch crowd needs.",
+          author: "Ahmet",
+          role: "Street-food counter",
+        },
+        {
+          quote:
+            "It feels like us, not a template. People remember the flavors and the site.",
+          author: "Sara",
+          role: "Gelateria",
         },
       ],
     },
@@ -68,6 +122,8 @@ export const en = {
         "Not templates. Brand worlds that show what your restaurant could become online.",
       text: "These fictional directions show how the same strategic framework can shift from refined to familiar, fast, or playful — without making every restaurant feel the same.",
       switchLabel: "Show style study",
+      prevLabel: "Previous style study",
+      nextLabel: "Next style study",
       staticLabel: "Static-first build",
       items: [
         {
@@ -145,22 +201,35 @@ export const en = {
     services: {
       label: "03 / Offer",
       title: "The digital details that help people choose you.",
-      text: "Vicino combines restaurant website design, brand atmosphere, local visibility, and launch support into one clear path.",
+      text: "VICINO combines restaurant website design, brand atmosphere, local visibility, and launch support into one clear path.",
       items: [
         {
           icon: "✦",
           title: "Website design & build",
           text: "Fast, responsive Astro sites with mobile layout and multilingual structure included from the start.",
+          details: [
+            "Mobile-first",
+            "Static build",
+            "Contact path",
+            "Fast launch",
+          ],
         },
         {
           icon: "◐",
           title: "Brand atmosphere",
           text: "Visual direction, tone, colors, typography, and layout systems that feel tailored instead of generic.",
+          details: [
+            "Mood direction",
+            "Type system",
+            "Color tokens",
+            "Section rhythm",
+          ],
         },
         {
           icon: "⌖",
           title: "Local visibility",
           text: "Search-friendly structure, localized metadata, analytics foundations, and Google-ready business information.",
+          details: ["Local SEO", "Schema base", "Analytics", "Google-ready"],
         },
       ],
     },
@@ -179,6 +248,30 @@ export const en = {
       sendPlan: "Start a conversation",
       modulesLabel: "Modules",
       addonsLabel: "Add-ons",
+      presetsLabel: "Typical starting points",
+      presets: [
+        {
+          title: "Café starter",
+          text: "A clear first version for neighborhood spots that need opening hours, menu clarity, and local search confidence.",
+          price: 1330,
+          items: ["Foundation", "Digital menu", "Get found"],
+          optionIds: ["digital-menu", "get-found"],
+        },
+        {
+          title: "Premium restaurant",
+          text: "A polished route for restaurants where atmosphere, reservation flow, and presentation matter most.",
+          price: 1590,
+          items: ["Foundation", "Premium design", "Reservations"],
+          optionIds: ["design-animation", "reservations"],
+        },
+        {
+          title: "Full local presence",
+          text: "A broader launch package for restaurants that want structure, visibility, photos, and room to grow.",
+          price: 1740,
+          items: ["Foundation", "Full site", "Get found", "Gallery"],
+          optionIds: ["site-structure", "get-found", "gallery-reviews"],
+        },
+      ],
       base: {
         title: "Foundation",
         price: 690,
@@ -347,8 +440,8 @@ export const en = {
     comingSoon: "Coming soon",
   },
   seo: {
-    title: "Vicino — Premium websites for restaurants and cafés",
+    title: "VICINO — Premium websites for restaurants and cafés",
     description:
-      "Vicino creates polished websites and digital identities for restaurants, cafés, bars, gelato shops, and street-food spots that want to stand out online.",
+      "VICINO creates polished websites and digital identities for restaurants, cafés, bars, gelato shops, and street-food spots that want to stand out online.",
   },
 };

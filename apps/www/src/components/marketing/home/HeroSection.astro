@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import forkSpaghetti from "../../../assets/images/fork-spaghetti.png";
 import type { Locale } from "../../../i18n/config";
+import { contact } from "../../../data/contact";
 import { useTranslations } from "../../../i18n";
 import Container from "../../ui/Container.astro";
 
@@ -10,7 +11,7 @@ const t = useTranslations(locale);
 ---
 
 <section
-  class="relative isolate overflow-hidden bg-[#0d0d0d] text-white"
+  class="relative isolate overflow-hidden text-white"
   aria-labelledby="home-hero-title"
 >
   <div
@@ -22,7 +23,7 @@ const t = useTranslations(locale);
   >
   </div>
 
-  <Container class="relative min-h-[820px] pt-44 md:min-h-screen md:pt-56">
+  <Container class="relative min-h-[820px] pt-28 md:min-h-screen md:pt-36">
     <div
       class="grid gap-16 lg:grid-cols-[minmax(0,0.98fr)_minmax(320px,0.72fr)] lg:items-center"
     >
@@ -36,7 +37,7 @@ const t = useTranslations(locale);
         <h1
           id="home-hero-title"
           class="max-w-[930px] text-[clamp(3.55rem,7vw,7.15rem)] font-black leading-[0.94] tracking-[-0.075em] text-[#eee7da]"
-          data-motion-hero
+          data-motion-hero-title
         >
           {t.home.hero.title}
         </h1>
@@ -52,7 +53,10 @@ const t = useTranslations(locale);
         >
           <a
             class="inline-flex w-fit rounded-full bg-[#f4e8d0] px-9 py-5 text-lg font-semibold tracking-[-0.035em] !text-[#111113] transition duration-300 hover:-translate-y-0.5 hover:bg-white hover:!text-[#111113]"
-            href="#contact-details"
+            href={contact.whatsappUrl}
+            rel="noreferrer"
+            target="_blank"
+            data-magnetic="0.4"
           >
             {t.home.hero.primaryCta}
           </a>
@@ -71,27 +75,33 @@ const t = useTranslations(locale);
       <div
         class="relative mx-auto hidden min-h-[600px] w-full max-w-[480px] lg:block"
         aria-hidden="true"
+        data-motion-hero
+        data-hero-scene
       >
         <div
           class="absolute inset-x-6 top-6 h-[32rem] rounded-full bg-[#f4e8d0]/10 blur-3xl"
         >
         </div>
         <div
-          class="absolute right-0 top-16 rounded-full border border-[#f4e8d0]/25 px-5 py-3 text-xs font-bold uppercase tracking-[0.22em] text-[#f4e8d0]/78 backdrop-blur"
+          class="parallax-layer absolute right-0 top-16 rounded-full border border-[#f4e8d0]/25 px-5 py-3 text-xs font-bold uppercase tracking-[0.22em] text-[#f4e8d0]/78 backdrop-blur"
+          data-parallax="22"
         >
           Atmosphere first
         </div>
-        <Image
-          class="relative mx-auto h-[590px] w-auto animate-float-slow object-contain drop-shadow-[0_44px_90px_rgba(0,0,0,0.78)]"
-          src={forkSpaghetti}
-          width={forkSpaghetti.width}
-          height={forkSpaghetti.height}
-          alt=""
-          loading="eager"
-          decoding="async"
-        />
+        <div class="parallax-layer relative" data-parallax="9">
+          <Image
+            class="mx-auto h-[590px] w-auto animate-float-slow object-contain drop-shadow-[0_44px_90px_rgba(0,0,0,0.78)]"
+            src={forkSpaghetti}
+            width={forkSpaghetti.width}
+            height={forkSpaghetti.height}
+            alt=""
+            loading="eager"
+            decoding="async"
+          />
+        </div>
         <div
-          class="absolute bottom-14 left-1 rounded-[2rem] border border-white/12 bg-black/35 p-5 shadow-2xl backdrop-blur-md"
+          class="parallax-layer absolute bottom-14 left-1 rounded-[2rem] border border-white/12 bg-black/35 p-5 shadow-2xl backdrop-blur-md"
+          data-parallax="-18"
         >
           <p class="font-serif text-3xl italic text-[#f4e8d0]">local</p>
           <p class="mt-1 max-w-[13rem] text-sm leading-5 text-white/72">

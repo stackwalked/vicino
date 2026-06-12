@@ -2,6 +2,7 @@
 import type { Locale } from "../../i18n/config";
 import HeroSection from "./home/HeroSection.astro";
 import ConceptBridge from "./home/ConceptBridge.astro";
+import SocialProof from "./home/SocialProof.astro";
 import BrandWorldShowcase from "./home/BrandWorldShowcase.astro";
 import ServicesSection from "./home/ServicesSection.astro";
 import PricingPreview from "./home/PricingPreview.astro";
@@ -13,6 +14,7 @@ const { locale } = Astro.props as { locale: Locale };
 
 <HeroSection locale={locale} />
 <ConceptBridge locale={locale} />
+<SocialProof locale={locale} />
 <BrandWorldShowcase locale={locale} />
 <ServicesSection locale={locale} />
 <PricingPreview locale={locale} />

@@ -5,7 +5,7 @@ import {
 import type { Locale } from "../i18n/config";
 
 export const site = {
-  name: "Vicino",
+  name: "VICINO",
   origin: "https://byvicino.it",
 } as const satisfies SiteMetadata;
 

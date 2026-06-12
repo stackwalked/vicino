@@ -1,0 +1,23 @@
+---
+type Props = { position: "top" | "bottom"; fill?: string };
+const { position, fill = "#f4e8d0" } = Astro.props;
+const top = position === "top";
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 1440 80"
+  preserveAspectRatio="none"
+  class:list={[
+    "pointer-events-none absolute left-0 z-20 block h-20 w-full",
+    top ? "top-0 -translate-y-full" : "bottom-0 translate-y-full",
+  ]}
+  aria-hidden="true"
+>
+  <path
+    d={top
+      ? "M 0 80 C 360 0 1080 0 1440 80 Z"
+      : "M 0 0 C 360 80 1080 80 1440 0 Z"}
+    fill={fill}
+  />
+</svg>

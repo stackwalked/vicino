@@ -3,6 +3,7 @@ import Container from "../ui/Container.astro";
 import type { Locale } from "../../i18n/config";
 import { useTranslations } from "../../i18n";
 import { getNavigation } from "../../data/navigation";
+import { contact } from "../../data/contact";
 import { getLocalizedPath } from "../../data/site";
 
 const { locale } = Astro.props as { locale: Locale };
@@ -23,14 +24,17 @@ const footerNavigation = [...navigation.primary, ...navigation.secondary];
         <h2 class="text-sm font-semibold text-white/60">{t.footer.contact}</h2>
         <ul class="mt-5 space-y-3 text-white/90">
           <li>
-            <a class="transition hover:text-[#f4e8d0]" href="tel:+393475829146"
-              >+39 347 582 9146</a
+            <a
+              class="transition hover:text-[#f4e8d0]"
+              href={contact.whatsappUrl}
+              rel="noreferrer"
+              target="_blank">{contact.phoneDisplay}</a
             >
           </li>
           <li>
             <a
               class="transition hover:text-[#f4e8d0]"
-              href="mailto:hello@byvicino.it">hello@byvicino.it</a
+              href={`mailto:${contact.email}`}>{contact.email}</a
             >
           </li>
         </ul>
@@ -38,7 +42,7 @@ const footerNavigation = [...navigation.primary, ...navigation.secondary];
 
       <nav aria-label="Footer navigation">
         <h2 class="text-sm font-bold uppercase tracking-[0.08em] text-white/60">
-          Vicino
+          VICINO
         </h2>
         <ul class="mt-5 space-y-3 text-white/90">
           {
@@ -114,15 +118,15 @@ const footerNavigation = [...navigation.primary, ...navigation.secondary];
     <a
       class="mx-auto mt-16 flex w-fit items-center justify-center gap-3 md:mt-20"
       href={getLocalizedPath(locale)}
-      aria-label="Vicino home"
+      aria-label="VICINO home"
     >
       <span
         class="grid size-9 place-items-center rounded-full border border-white/90 text-[17px] leading-none"
         >🍴</span
       >
       <span
-        class="text-5xl font-black lowercase leading-none tracking-[-0.08em] md:text-6xl"
-        >vicino</span
+        class="text-5xl font-black uppercase leading-none tracking-[-0.08em] md:text-6xl"
+        >VICINO</span
       >
     </a>
   </Container>
